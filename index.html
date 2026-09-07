@@ -127,153 +127,58 @@
   .burger{display:none;background:none;border:none;cursor:pointer;padding:6px;}
   .burger span{display:block;width:24px;height:3px;background:var(--carbon);margin:5px 0;}
 
-  /* ---------- PORTADA EDITORIAL ---------- */
-  html{scroll-padding-top:90px;}
-  header{
-    background:#171717;color:#f6f4ee;
-    border-bottom:1px solid rgba(246,244,238,.2);
-    backdrop-filter:none;
-  }
-  .nav-inner{max-width:1440px;padding:18px 40px;gap:24px;}
-  .nav-logo img{height:38px;width:auto;}
-  header .nav-cta{border-color:var(--red);background:var(--red);}
-  header .burger span{background:#f6f4ee;}
-  nav.links{gap:24px;}
-  nav.links a{font-size:.875rem;text-transform:none;letter-spacing:0;}
-  .nav-cta{font-size:.875rem;border-radius:0;text-transform:none;letter-spacing:0;}
-  .burger{min-width:44px;min-height:44px;}
-  .mobile-menu{color:var(--carbon);}
+  /* ---------- HERO ---------- */
   .hero{
-    --hero-shift-x:0px;
-    --hero-shift-y:0px;
-    --tear-open:8%;
-    --silhouette-rise:0px;
-    position:relative;isolation:isolate;
-    min-height:1080px;min-height:max(1080px,100svh);
-    padding:118px 0 0;
-    display:flex;flex-direction:column;
-    overflow:hidden;background:var(--red);color:var(--cream);
+    position:relative;
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding-top:80px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle, var(--carbon) 1.6px, transparent 1.6px) 0 0/16px 16px,
+      var(--cream);
   }
   .hero::before{
-    content:"";position:absolute;inset:0;z-index:3;
-    background:url("img/textura-tv-ruido.png") repeat;
-    background-size:128px 512px;opacity:.075;
-    mix-blend-mode:soft-light;pointer-events:none;
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(115deg, var(--cream) 0%, var(--cream) 46%, var(--red) 47%, var(--red) 100%);
+    clip-path:polygon(0 0,100% 0,100% 100%, 38% 100%);
+    z-index:0;
+    opacity:.94;
   }
-  .hero-art{
-    position:absolute;z-index:1;
-    right:0;top:310px;bottom:100px;width:48%;
-    pointer-events:none;
+  .hero-inner{position:relative;z-index:2;width:100%;}
+  .hero-tag{
+    max-width:1280px;margin:0 auto;padding:0 32px;
+    margin-bottom:18px;
   }
-  .hero-art img{
-    width:100%;height:100%;object-fit:contain;object-position:center bottom;
-    filter:brightness(0);
-    transform:translate(var(--hero-shift-x),calc(var(--hero-shift-y) + var(--silhouette-rise)));
-    transition:transform .18s linear;
+  .hero-tag .eyebrow{color:var(--carbon);}
+  .hero-word{
+    padding-left:32px;
+    padding-right:32px;
+    position:relative;
+    display:block;
   }
-  .hero-tear{
-    position:absolute;z-index:0;pointer-events:none;overflow:hidden;
-    top:300px;right:-2%;bottom:100px;width:56%;
-    background:var(--cream);
-    -webkit-mask-image:linear-gradient(transparent,#000 10%,#000 88%,transparent);
-    mask-image:linear-gradient(transparent,#000 10%,#000 88%,transparent);
+  .hero-word svg, .hero-word img{
+    width:clamp(200px, 74vw, 1180px);
+    max-width:100%;
+    height:auto;
+    display:block;
   }
-  .hero-tear-panel{
-    position:absolute;top:0;bottom:0;width:52%;
-    background:var(--red);
-    transition:transform .18s linear;
+  .hero-sub{
+    max-width:1280px;margin:22px auto 0;padding:0 32px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;flex-wrap:wrap;
   }
-  .hero-tear-panel::after{
-    content:"";position:absolute;top:0;bottom:0;width:46px;
-    background:url("img/borde-papel-rasgado.webp") center / 100% 100% no-repeat;
+  .hero-sub p{
+    font-size:1.05rem;max-width:440px;font-weight:500;
+    color:var(--carbon);
   }
-  .hero-tear-panel--left{left:0;transform:translateX(calc(-1 * var(--tear-open)));}
-  .hero-tear-panel--left::after{right:-22px;transform:scaleX(-1);}
-  .hero-tear-panel--right{right:0;transform:translateX(var(--tear-open));}
-  .hero-tear-panel--right::after{left:-22px;}
-  .hero-brand{
-    width:min(760px,78%);padding:18px 24px;margin:0 0 28px;
-    background:#171717;
-  }
-  .hero-brand img{width:100%;height:auto;display:block;}
-  .hero-scroll-hint{
-    display:inline-block;font-size:.8125rem;margin-top:18px;
-    border-bottom:1px solid rgba(232,231,223,.6);padding:8px 0;
-  }
-  .hero-inner{
-    width:min(1360px,calc(100% - 80px));margin:0 auto;
-    position:relative;z-index:2;flex:1;
-    display:flex;flex-direction:column;justify-content:center;
-    padding:12px 0 44px;
-  }
-  .hero-meta{
-    display:flex;align-items:center;justify-content:space-between;gap:20px;
-    padding-bottom:20px;margin-bottom:40px;
-    border-bottom:1px solid rgba(232,231,223,.45);
-    font-size:.875rem;font-weight:600;
-  }
-  .hero-meta span:last-child{font-size:.8125rem;}
-  .hero-title{
-    font-size:clamp(3.5rem,7.8vw,7rem);
-    font-weight:900;line-height:.95;letter-spacing:-.045em;
-    margin:0 0 34px;max-width:100%;overflow-wrap:break-word;
-  }
-  .hero-title-line{display:block;width:fit-content;max-width:100%;}
-  .hero-title-line:not(:last-child){background:var(--red);padding-right:.08em;}
-  .hero-title-line:nth-child(1){animation:heroEnter .85s cubic-bezier(.16,1,.3,1) both;}
-  .hero-title-line:nth-child(2){animation:heroEnter .85s .1s cubic-bezier(.16,1,.3,1) both;}
-  .hero-title-line:nth-child(3){animation:heroEnter .85s .2s cubic-bezier(.16,1,.3,1) both;}
-  .hero-title-highlight{
-    position:relative;display:inline-block;max-width:100%;
-    background:var(--cream);color:var(--red);
-    padding:.08em .13em .015em;margin:.07em 0 0 -.025em;
-    transform:rotate(-1.4deg);
-  }
-  .hero-title-highlight::after{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:url("img/textura-galeria-fondo.png") repeat;
-    background-size:220px;mix-blend-mode:multiply;opacity:.13;
-  }
-  .hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;}
-  .hero-copy{max-width:470px;}
-  .hero-copy p{font-size:1rem;line-height:1.65;text-wrap:pretty;max-width:42ch;}
-  .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:24px;margin-top:24px;}
-  .hero-link{
-    display:inline-flex;align-items:center;justify-content:center;gap:22px;
-    padding:15px 22px;min-height:48px;
-    font-size:.9375rem;font-weight:700;
-    background:var(--cream);color:var(--carbon);border:1px solid var(--cream);
-    transition:background .25s,color .25s,transform .25s;
-  }
-  .hero-link:hover{background:var(--carbon);color:var(--cream);transform:translateY(-3px);}
-  .hero-link span{font-size:1.25rem;}
-  .hero-secondary{
-    display:inline-flex;align-items:center;min-height:44px;
-    font-size:.9375rem;font-weight:600;
-    border-bottom:1px solid rgba(232,231,223,.65);
-    transition:border-color .2s;
-  }
-  .hero-secondary:hover{border-color:var(--cream);}
-  .hero :focus-visible{outline-color:var(--cream);}
-  .hero-signature{
-    display:flex;align-items:center;gap:14px;flex-shrink:0;
-    padding:16px 0 4px;font-size:.8125rem;line-height:1.4;
-  }
-  .hero-signature img{width:64px;height:auto;transform:rotate(8deg);}
-  .hero-signature span{max-width:12ch;}
-  .hero-motion{
-    position:relative;z-index:4;align-self:flex-end;margin:0 40px 0 0;
-    min-width:44px;min-height:44px;padding:8px 12px;
-    background:var(--carbon);color:var(--cream);border:1px solid rgba(232,231,223,.45);
-    font:500 .8125rem 'Archivo',sans-serif;cursor:pointer;
-  }
-  .hero-motion[hidden]{display:none;}
-  .hero[data-motion="paused"] .marquee-track{animation-play-state:paused;}
-  .hero[data-motion="paused"] .hero-art img{transform:none;transition:none;}
-  .hero[data-motion="paused"] .hero-tear-panel{transition:none;}
-  @keyframes heroEnter{
-    from{opacity:0;transform:translateY(24px);}
-    to{opacity:1;transform:translateY(0);}
+  .hero-mascot{
+    position:absolute;
+    right:6%;
+    bottom:-4%;
+    width:min(300px, 22vw);
+    z-index:3;
+    animation:mascotBob 3.2s ease-in-out infinite;
   }
   @keyframes mascotBob{
     0%,100%{transform:translateY(0) rotate(-2deg);}
@@ -282,30 +187,36 @@
 
   .marquee{
     position:relative;z-index:2;
-    margin-top:28px;
+    margin-top:56px;
     background:var(--carbon);
     border-top:3px solid var(--carbon);
     border-bottom:3px solid var(--carbon);
     overflow:hidden;
-    padding:17px 0;
+    padding:14px 0;
   }
   .marquee-track{
     display:flex;width:max-content;
-    animation:scrollLeft 36s linear infinite;
+    animation:scrollLeft 22s linear infinite;
   }
   .marquee-track span{
     font-family:'League Spartan',sans-serif;
     font-weight:800;text-transform:uppercase;
-    font-size:1rem;color:var(--cream);letter-spacing:.035em;
+    font-size:1.5rem;color:var(--cream);
     padding:0 28px;white-space:nowrap;
     display:flex;align-items:center;gap:28px;
   }
-  .hero .marquee:hover .marquee-track{animation-play-state:paused;}
   .marquee-track span::after{content:"✳";color:var(--red);}
   @keyframes scrollLeft{
     from{transform:translateX(0);}
     to{transform:translateX(-50%);}
   }
+
+  .scroll-cue{
+    position:absolute;left:32px;bottom:18px;z-index:2;
+    display:flex;align-items:center;gap:10px;
+    font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  }
+  .scroll-cue .line{width:34px;height:2px;background:var(--carbon);}
 
   /* ---------- SECTION GENERIC ---------- */
   section{position:relative;padding:110px 0;}
@@ -737,7 +648,19 @@
     .reveal{opacity:1;transform:none;}
   }
 
-  /* ---------- ACENTOS DE LAS SECCIONES ---------- */
+  /* ---------- NUEVOS ACENTOS ANIMADOS ---------- */
+  .hero-star-deco{
+    position:absolute;z-index:2;
+    width:min(120px, 11vw);
+    top:110px; right:6%;
+    animation:spinWiggle 7s ease-in-out infinite;
+    filter:drop-shadow(0 6px 10px rgba(39,39,42,.18));
+  }
+  @keyframes spinWiggle{
+    0%,100%{transform:rotate(-8deg) scale(1);}
+    50%{transform:rotate(14deg) scale(1.06);}
+  }
+
   .services{position:relative;}
   .services-cam-deco{
     position:absolute;z-index:0;
@@ -773,6 +696,7 @@
   .gallery-grid .gallery-item:nth-child(6){transition-delay:.34s;}
 
   @media (max-width:900px){
+    .hero-star-deco{width:64px;top:100px;left:auto;right:22px;}
     .services-cam-deco{width:48px;top:20px;}
   }
 
@@ -809,55 +733,25 @@
       background:var(--carbon);
       transform:scale(1.3);
     }
+    .hero-mascot{
+      position:absolute;
+      top:96px; bottom:auto;
+      right:20px;
+      width:20vw; min-width:64px; max-width:110px;
+    }
+    .hero-word{padding-left:16px;padding-right:16px;}
     .manifesto .wrap{gap:32px;}
     .contact-meta{flex-direction:column;}
     .wrap{padding:0 20px;}
+    .hero-tag,.hero-sub{padding:0 20px;}
     section{padding:80px 0;}
-    .nav-inner{padding:12px 20px;}
-    .nav-logo img{height:30px;}
-    .hero{padding:100px 0 0;min-height:1000px;}
-    .hero-brand{width:min(620px,88%);padding:14px 18px;}
-    .hero-inner{width:calc(100% - 40px);padding-bottom:28px;}
-    .hero-meta{margin-bottom:48px;align-items:flex-start;}
-    .hero-meta span:first-child{max-width:22ch;}
-    .hero-title{font-size:clamp(3rem,11.5vw,6.5rem);}
-    .hero-art{width:55%;right:-4%;top:340px;bottom:170px;}
-    .hero-tear{width:65%;right:-5%;top:325px;bottom:170px;}
-    .hero-signature{padding-bottom:8px;}
-    .hero-signature img{width:48px;}
-    .hero-signature span{display:none;}
-    .hero-motion{margin-right:20px;}
   }
   @media (max-width:480px){
-    .hero{min-height:970px;}
-    .hero-brand{width:100%;padding:12px 14px;margin-bottom:24px;}
-    .hero-title{font-size:clamp(2rem,13vw,4rem);margin-bottom:26px;}
-    .hero-meta{font-size:.8125rem;gap:12px;}
-    .hero-meta span:last-child{max-width:9ch;text-align:right;}
-    .hero-art{top:310px;bottom:auto;height:350px;width:78%;right:-20%;}
-    .hero-tear{top:300px;bottom:auto;height:375px;width:82%;right:-20%;}
-    .hero-tear-panel::after{width:28px;}
-    .hero-tear-panel--left::after{right:-14px;}
-    .hero-tear-panel--right::after{left:-14px;}
-    .hero-copy{position:relative;padding:16px;background:var(--red);}
-    .hero-bottom{display:block;}
-    .hero-copy{max-width:100%;}
-    .hero-copy p{max-width:34ch;}
-    .hero-actions{gap:12px 20px;margin-top:20px;}
-    .hero-link{padding:14px 16px;gap:12px;}
-    .hero-signature{display:none;}
-    .hero .marquee{margin-top:18px;}
-    .marquee-track span{font-size:.875rem;padding:0 18px;gap:16px;}
+    .marquee-track span{font-size:1.1rem;padding:0 18px;gap:16px;}
+    .hero-sub p{font-size:.95rem;}
     .contact-actions .btn-primary, .contact-actions .btn-ghost{
       width:100%;text-align:center;padding:16px 24px;
     }
-  }
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto;}
-    .hero-art img{transform:none;}
-    .hero{--tear-open:35%;}
-    .hero-tear-panel{transition:none;}
-    .hero-motion{display:none;}
   }
 
   /* ---------- GALERIA DISEÑO GRAFICO ---------- */
@@ -926,7 +820,7 @@
 
 <header>
   <div class="nav-inner">
-    <a href="#" class="nav-logo" aria-label="desruptivo"><img src="img/logo-desruptivo-blanco-rojo.svg" alt="desruptivo" width="920" height="340"></a>
+    <a href="#" class="nav-logo" aria-label="Desruptivo"><img src="img/logo-desruptivo.png" alt="Desruptivo"></a>
     <nav class="links">
       <a href="#servicios">Servicios</a>
       <a href="#manifiesto">Manifiesto</a>
@@ -935,52 +829,27 @@
       <a href="#contacto">Contacto</a>
     </nav>
     <a href="#contacto" class="nav-cta">Hablemos</a>
-    <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="hero" aria-labelledby="heroTitle">
-  <div class="hero-tear" aria-hidden="true">
-    <div class="hero-tear-panel hero-tear-panel--left"></div>
-    <div class="hero-tear-panel hero-tear-panel--right"></div>
-  </div>
-  <div class="hero-art" aria-hidden="true">
-    <img src="img/silueta-desruptivo.webp" alt="" width="1024" height="1536" fetchpriority="high" decoding="async">
-  </div>
+<section class="hero">
   <div class="hero-inner">
-    <div class="hero-brand">
-      <img src="img/logo-desruptivo-blanco-rojo.svg" alt="desruptivo" width="920" height="340" fetchpriority="high">
+    <div class="hero-tag">
+      <span class="eyebrow"><span class="eyebrow-text" data-text="Agencia creativa integral">Agencia creativa integral</span></span>
     </div>
-    <div class="hero-meta">
-      <span>desruptivo / Agencia creativa integral</span>
-      <span>Mérida, México</span>
-    </div>
-    <h1 class="hero-title" id="heroTitle">
-      <span class="hero-title-line">Hazlos</span>
-      <span class="hero-title-line">sentir algo</span>
-      <span class="hero-title-line"><span class="hero-title-highlight">distinto.</span></span>
-    </h1>
-    <div class="hero-bottom">
-      <div class="hero-copy">
-        <p>Marketing, ingeniería y multimedia bajo una misma dirección creativa. De la idea a lo que tu marca pone en el mundo.</p>
-        <div class="hero-actions">
-          <a class="hero-link" href="https://wa.me/529999064262?text=Hola%20Desruptivo%2C%20quiero%20platicar%20sobre%20un%20proyecto" target="_blank" rel="noopener">Hablemos de tu proyecto <span aria-hidden="true">↗</span></a>
-          <a class="hero-secondary" href="#servicios">Qué hacemos</a>
-        </div>
-        <a class="hero-scroll-hint" href="#servicios">Desplázate. Rompe el fondo. ↓</a>
-      </div>
-      <div class="hero-signature">
-        <img src="img/mascota-desruptivo.png" alt="Ruti, mascota de desruptivo" width="1281" height="1216">
-        <span lang="en">There is<br>no one way.</span>
-      </div>
+    <h1 class="hero-word"><img src="img/logo-desruptivo.png" alt="Desruptivo"></h1>
+    <div class="hero-sub">
+      <p>Branding, digital, video y marketing bajo una sola dirección creativa. Hacemos ruido con intención — todos los ojos puestos en lo que construimos.</p>
     </div>
   </div>
-  <button class="hero-motion" type="button" aria-pressed="false" hidden>Pausar movimiento</button>
-  <div class="marquee" aria-hidden="true">
+  <img src="img/mascota-desruptivo.png" alt="Mascota Desruptivo" class="hero-mascot">
+  <img src="img/hero-estrella-deco.png" alt="" class="hero-star-deco">
+  <div class="marquee">
     <div class="marquee-track">
-      <span>Marketing</span><span>Ingeniería</span><span>Multimedia</span><span>There is no one way</span>
-      <span>Marketing</span><span>Ingeniería</span><span>Multimedia</span><span>There is no one way</span>
+      <span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span>
+      <span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span>
     </div>
   </div>
 </section>
@@ -1209,81 +1078,6 @@
 </footer>
 
 <script>
-  // Portada: silueta con parallax y papel rasgado sincronizado al scroll nativo.
-  const hero = document.querySelector('.hero');
-  const motionButton = document.querySelector('.hero-motion');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  let motionPaused = false;
-  let heroFrame = 0;
-  let heroX = 0;
-  let heroY = 0;
-  let tearFrame = 0;
-  const updateTear = () => {
-    tearFrame = 0;
-    if (motionPaused || reducedMotion.matches || document.hidden) return;
-    const bounds = hero.getBoundingClientRect();
-    const distance = Math.max(1, Math.min(bounds.height * .55, window.innerHeight * .8));
-    const progress = Math.min(1, Math.max(0, -bounds.top / distance));
-    hero.style.setProperty('--tear-open', (8 + progress * 66).toFixed(2) + '%');
-    hero.style.setProperty('--silhouette-rise', (-progress * 36).toFixed(2) + 'px');
-  };
-  const requestTearUpdate = () => {
-    if (motionPaused || reducedMotion.matches || document.hidden || tearFrame) return;
-    tearFrame = requestAnimationFrame(updateTear);
-  };
-  const resetHeroMotion = () => {
-    cancelAnimationFrame(heroFrame);
-    heroFrame = 0;
-    hero.style.setProperty('--hero-shift-x', '0px');
-    hero.style.setProperty('--hero-shift-y', '0px');
-  };
-  const syncHeroMotion = () => {
-    const paused = motionPaused || reducedMotion.matches;
-    hero.dataset.motion = paused ? 'paused' : 'playing';
-    motionButton.hidden = reducedMotion.matches;
-    motionButton.setAttribute('aria-pressed', String(motionPaused));
-    motionButton.textContent = motionPaused ? 'Activar movimiento' : 'Pausar movimiento';
-    if (paused) {
-      resetHeroMotion();
-      cancelAnimationFrame(tearFrame);
-      tearFrame = 0;
-      if (reducedMotion.matches) {
-        hero.style.setProperty('--tear-open', '35%');
-        hero.style.setProperty('--silhouette-rise', '0px');
-      }
-    } else updateTear();
-  };
-  motionButton.addEventListener('click', () => {
-    motionPaused = !motionPaused;
-    syncHeroMotion();
-  });
-  reducedMotion.addEventListener('change', syncHeroMotion);
-  finePointer.addEventListener('change', resetHeroMotion);
-  hero.addEventListener('pointermove', (event) => {
-    if (motionPaused || reducedMotion.matches || !finePointer.matches) return;
-    const bounds = hero.getBoundingClientRect();
-    heroX = ((event.clientX - bounds.left) / bounds.width - .5) * 14;
-    heroY = ((event.clientY - bounds.top) / bounds.height - .5) * 10;
-    if (!heroFrame) heroFrame = requestAnimationFrame(() => {
-      hero.style.setProperty('--hero-shift-x', heroX.toFixed(2) + 'px');
-      hero.style.setProperty('--hero-shift-y', heroY.toFixed(2) + 'px');
-      heroFrame = 0;
-    });
-  }, {passive:true});
-  hero.addEventListener('pointerleave', resetHeroMotion);
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      resetHeroMotion();
-      cancelAnimationFrame(tearFrame);
-      tearFrame = 0;
-    } else requestTearUpdate();
-  });
-  window.addEventListener('scroll', requestTearUpdate, {passive:true});
-  window.addEventListener('resize', requestTearUpdate, {passive:true});
-  window.addEventListener('pageshow', requestTearUpdate);
-  syncHeroMotion();
-
   // Reveal on scroll
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
@@ -1309,31 +1103,16 @@
     });
   });
 
-  // Navegación móvil: posición real del header y cierre accesible.
+  // Mobile burger -> simple toggle of a stacked menu
   const burger = document.querySelector('.burger');
-  const siteHeader = document.querySelector('header');
-  const closeMobileMenu = (restoreFocus = false) => {
-    document.querySelector('.mobile-menu')?.remove();
-    burger.setAttribute('aria-expanded', 'false');
-    burger.setAttribute('aria-label', 'Abrir menú');
-    burger.removeAttribute('aria-controls');
-    if (restoreFocus) burger.focus();
-  };
-  const positionMobileMenu = () => {
-    const menu = document.querySelector('.mobile-menu');
-    if (!menu) return;
-    const top = siteHeader.getBoundingClientRect().bottom;
-    menu.style.top = top + 'px';
-    menu.style.maxHeight = 'calc(100svh - ' + top + 'px)';
-  };
+  let menuOpen = false;
   burger.addEventListener('click', ()=>{
+    menuOpen = !menuOpen;
     let menu = document.querySelector('.mobile-menu');
     if(!menu){
-      menu = document.createElement('nav');
+      menu = document.createElement('div');
       menu.className = 'mobile-menu';
-      menu.id = 'mobileMenu';
-      menu.setAttribute('aria-label', 'Navegación principal');
-      menu.style.cssText = 'position:fixed;left:0;right:0;background:#e8e7df;border-bottom:2px solid #27272a;display:flex;flex-direction:column;padding:8px 20px;z-index:99;overflow-y:auto;';
+      menu.style.cssText = 'position:fixed;top:64px;left:0;right:0;background:#e8e7df;border-bottom:2px solid #27272a;display:flex;flex-direction:column;padding:8px 20px;z-index:99;max-height:calc(100svh - 64px);overflow-y:auto;';
       menu.innerHTML = `
         <a href="#servicios" style="font-weight:700;text-transform:uppercase;padding:16px 0;border-bottom:1px solid #d6d6ce;">Servicios</a>
         <a href="#manifiesto" style="font-weight:700;text-transform:uppercase;padding:16px 0;border-bottom:1px solid #d6d6ce;">Manifiesto</a>
@@ -1342,23 +1121,11 @@
         <a href="#contacto" style="font-weight:700;text-transform:uppercase;padding:16px 0;">Contacto</a>
       `;
       document.body.appendChild(menu);
-      positionMobileMenu();
-      burger.setAttribute('aria-expanded', 'true');
-      burger.setAttribute('aria-label', 'Cerrar menú');
-      burger.setAttribute('aria-controls', 'mobileMenu');
-      menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>closeMobileMenu()));
-      menu.querySelector('a')?.focus();
+      menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{menu.remove(); menuOpen=false;}));
     } else {
-      closeMobileMenu(true);
+      menu.remove();
     }
   });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && document.querySelector('.mobile-menu')) closeMobileMenu(true);
-  });
-  window.addEventListener('resize', () => {
-    if (window.matchMedia('(min-width:901px)').matches) closeMobileMenu();
-    else positionMobileMenu();
-  }, {passive:true});
 
   // Carrusel de video (mobile): dots de paginación
   const workGrid = document.getElementById('workGrid');
