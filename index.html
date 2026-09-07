@@ -127,58 +127,123 @@
   .burger{display:none;background:none;border:none;cursor:pointer;padding:6px;}
   .burger span{display:block;width:24px;height:3px;background:var(--carbon);margin:5px 0;}
 
-  /* ---------- HERO ---------- */
+  /* ---------- PORTADA EDITORIAL ---------- */
+  html{scroll-padding-top:90px;}
+  header{
+    background:var(--cream);
+    border-bottom:1px solid rgba(39,39,42,.2);
+    backdrop-filter:none;
+  }
+  .nav-inner{max-width:1440px;padding:18px 40px;gap:24px;}
+  .nav-logo img{height:32px;width:auto;}
+  nav.links{gap:24px;}
+  nav.links a{font-size:.875rem;text-transform:none;letter-spacing:0;}
+  .nav-cta{font-size:.875rem;border-radius:0;text-transform:none;letter-spacing:0;}
+  .burger{min-width:44px;min-height:44px;}
+  .mobile-menu{color:var(--carbon);}
   .hero{
-    position:relative;
-    min-height:100svh;
-    display:flex;flex-direction:column;justify-content:center;
-    padding-top:80px;
-    overflow:hidden;
-    background:
-      radial-gradient(circle, var(--carbon) 1.6px, transparent 1.6px) 0 0/16px 16px,
-      var(--cream);
+    --hero-shift-x:0px;
+    --hero-shift-y:0px;
+    position:relative;isolation:isolate;
+    min-height:800px;min-height:max(800px,100svh);
+    padding:118px 0 0;
+    display:flex;flex-direction:column;
+    overflow:hidden;background:var(--red);color:var(--cream);
   }
   .hero::before{
+    content:"";position:absolute;inset:0;z-index:3;
+    background:url("img/textura-tv-ruido.png") repeat;
+    background-size:128px 512px;opacity:.075;
+    mix-blend-mode:soft-light;pointer-events:none;
+  }
+  .hero-art{
+    position:absolute;z-index:0;
+    right:-3%;top:65px;bottom:0;width:62%;
+    pointer-events:none;overflow:hidden;
+    -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 24%);
+    mask-image:linear-gradient(to right,transparent 0%,#000 24%);
+  }
+  .hero-art img{
+    width:100%;height:100%;object-fit:cover;object-position:50% 36%;
+    transform:translate(var(--hero-shift-x),var(--hero-shift-y)) scale(1.045);
+    transition:transform .8s cubic-bezier(.2,.65,.3,1);
+  }
+  .hero-art::after{
     content:"";position:absolute;inset:0;
-    background:linear-gradient(115deg, var(--cream) 0%, var(--cream) 46%, var(--red) 47%, var(--red) 100%);
-    clip-path:polygon(0 0,100% 0,100% 100%, 38% 100%);
-    z-index:0;
-    opacity:.94;
+    background:linear-gradient(0deg,var(--red) 0%,transparent 24%);
   }
-  .hero-inner{position:relative;z-index:2;width:100%;}
-  .hero-tag{
-    max-width:1280px;margin:0 auto;padding:0 32px;
-    margin-bottom:18px;
+  .hero-inner{
+    width:min(1360px,calc(100% - 80px));margin:0 auto;
+    position:relative;z-index:2;flex:1;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:12px 0 44px;
   }
-  .hero-tag .eyebrow{color:var(--carbon);}
-  .hero-word{
-    padding-left:32px;
-    padding-right:32px;
-    position:relative;
-    display:block;
+  .hero-meta{
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding-bottom:20px;margin-bottom:40px;
+    border-bottom:1px solid rgba(232,231,223,.45);
+    font-size:.875rem;font-weight:600;
   }
-  .hero-word svg, .hero-word img{
-    width:clamp(200px, 74vw, 1180px);
-    max-width:100%;
-    height:auto;
-    display:block;
+  .hero-meta span:last-child{font-size:.8125rem;}
+  .hero-title{
+    font-size:clamp(4.5rem,9.8vw,9rem);
+    font-weight:900;line-height:.95;letter-spacing:-.045em;
+    margin:0 0 34px;max-width:100%;overflow-wrap:break-word;
   }
-  .hero-sub{
-    max-width:1280px;margin:22px auto 0;padding:0 32px;
-    display:flex;justify-content:space-between;align-items:flex-end;
-    gap:24px;flex-wrap:wrap;
+  .hero-title-line{display:block;width:fit-content;max-width:100%;}
+  .hero-title-line:nth-child(1){animation:heroEnter .85s cubic-bezier(.16,1,.3,1) both;}
+  .hero-title-line:nth-child(2){animation:heroEnter .85s .1s cubic-bezier(.16,1,.3,1) both;}
+  .hero-title-line:nth-child(3){animation:heroEnter .85s .2s cubic-bezier(.16,1,.3,1) both;}
+  .hero-title-highlight{
+    position:relative;display:inline-block;max-width:100%;
+    background:var(--cream);color:var(--red);
+    padding:.08em .13em .015em;margin:.07em 0 0 -.025em;
+    transform:rotate(-1.4deg);
   }
-  .hero-sub p{
-    font-size:1.05rem;max-width:440px;font-weight:500;
-    color:var(--carbon);
+  .hero-title-highlight::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:url("img/textura-galeria-fondo.png") repeat;
+    background-size:220px;mix-blend-mode:multiply;opacity:.13;
   }
-  .hero-mascot{
-    position:absolute;
-    right:6%;
-    bottom:-4%;
-    width:min(300px, 22vw);
-    z-index:3;
-    animation:mascotBob 3.2s ease-in-out infinite;
+  .hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;}
+  .hero-copy{max-width:470px;}
+  .hero-copy p{font-size:1rem;line-height:1.65;text-wrap:pretty;max-width:42ch;}
+  .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:24px;margin-top:24px;}
+  .hero-link{
+    display:inline-flex;align-items:center;justify-content:center;gap:22px;
+    padding:15px 22px;min-height:48px;
+    font-size:.9375rem;font-weight:700;
+    background:var(--cream);color:var(--carbon);border:1px solid var(--cream);
+    transition:background .25s,color .25s,transform .25s;
+  }
+  .hero-link:hover{background:var(--carbon);color:var(--cream);transform:translateY(-3px);}
+  .hero-link span{font-size:1.25rem;}
+  .hero-secondary{
+    display:inline-flex;align-items:center;min-height:44px;
+    font-size:.9375rem;font-weight:600;
+    border-bottom:1px solid rgba(232,231,223,.65);
+    transition:border-color .2s;
+  }
+  .hero-secondary:hover{border-color:var(--cream);}
+  .hero :focus-visible{outline-color:var(--cream);}
+  .hero-signature{
+    display:flex;align-items:center;gap:14px;flex-shrink:0;
+    padding:16px 0 4px;font-size:.8125rem;line-height:1.4;
+  }
+  .hero-signature img{width:64px;height:auto;transform:rotate(8deg);}
+  .hero-signature span{max-width:12ch;}
+  .hero-motion{
+    position:relative;z-index:4;align-self:flex-end;margin:0 40px 0 0;
+    min-width:44px;min-height:44px;padding:8px 12px;
+    background:var(--carbon);color:var(--cream);border:1px solid rgba(232,231,223,.45);
+    font:500 .8125rem 'Archivo',sans-serif;cursor:pointer;
+  }
+  .hero-motion[hidden]{display:none;}
+  .hero[data-motion="paused"] .marquee-track{animation-play-state:paused;}
+  .hero[data-motion="paused"] .hero-art img{transform:none;transition:none;}
+  @keyframes heroEnter{
+    from{opacity:0;transform:translateY(24px);}
+    to{opacity:1;transform:translateY(0);}
   }
   @keyframes mascotBob{
     0%,100%{transform:translateY(0) rotate(-2deg);}
@@ -187,36 +252,30 @@
 
   .marquee{
     position:relative;z-index:2;
-    margin-top:56px;
+    margin-top:28px;
     background:var(--carbon);
     border-top:3px solid var(--carbon);
     border-bottom:3px solid var(--carbon);
     overflow:hidden;
-    padding:14px 0;
+    padding:17px 0;
   }
   .marquee-track{
     display:flex;width:max-content;
-    animation:scrollLeft 22s linear infinite;
+    animation:scrollLeft 36s linear infinite;
   }
   .marquee-track span{
     font-family:'League Spartan',sans-serif;
     font-weight:800;text-transform:uppercase;
-    font-size:1.5rem;color:var(--cream);
+    font-size:1rem;color:var(--cream);letter-spacing:.035em;
     padding:0 28px;white-space:nowrap;
     display:flex;align-items:center;gap:28px;
   }
+  .hero .marquee:hover .marquee-track{animation-play-state:paused;}
   .marquee-track span::after{content:"✳";color:var(--red);}
   @keyframes scrollLeft{
     from{transform:translateX(0);}
     to{transform:translateX(-50%);}
   }
-
-  .scroll-cue{
-    position:absolute;left:32px;bottom:18px;z-index:2;
-    display:flex;align-items:center;gap:10px;
-    font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  }
-  .scroll-cue .line{width:34px;height:2px;background:var(--carbon);}
 
   /* ---------- SECTION GENERIC ---------- */
   section{position:relative;padding:110px 0;}
@@ -648,19 +707,7 @@
     .reveal{opacity:1;transform:none;}
   }
 
-  /* ---------- NUEVOS ACENTOS ANIMADOS ---------- */
-  .hero-star-deco{
-    position:absolute;z-index:2;
-    width:min(120px, 11vw);
-    top:110px; right:6%;
-    animation:spinWiggle 7s ease-in-out infinite;
-    filter:drop-shadow(0 6px 10px rgba(39,39,42,.18));
-  }
-  @keyframes spinWiggle{
-    0%,100%{transform:rotate(-8deg) scale(1);}
-    50%{transform:rotate(14deg) scale(1.06);}
-  }
-
+  /* ---------- ACENTOS DE LAS SECCIONES ---------- */
   .services{position:relative;}
   .services-cam-deco{
     position:absolute;z-index:0;
@@ -696,7 +743,6 @@
   .gallery-grid .gallery-item:nth-child(6){transition-delay:.34s;}
 
   @media (max-width:900px){
-    .hero-star-deco{width:64px;top:100px;left:auto;right:22px;}
     .services-cam-deco{width:48px;top:20px;}
   }
 
@@ -733,25 +779,46 @@
       background:var(--carbon);
       transform:scale(1.3);
     }
-    .hero-mascot{
-      position:absolute;
-      top:96px; bottom:auto;
-      right:20px;
-      width:20vw; min-width:64px; max-width:110px;
-    }
-    .hero-word{padding-left:16px;padding-right:16px;}
     .manifesto .wrap{gap:32px;}
     .contact-meta{flex-direction:column;}
     .wrap{padding:0 20px;}
-    .hero-tag,.hero-sub{padding:0 20px;}
     section{padding:80px 0;}
+    .nav-inner{padding:12px 20px;}
+    .nav-logo img{height:30px;}
+    .hero{padding:100px 0 0;min-height:780px;}
+    .hero-inner{width:calc(100% - 40px);padding-bottom:28px;}
+    .hero-meta{margin-bottom:48px;align-items:flex-start;}
+    .hero-meta span:first-child{max-width:22ch;}
+    .hero-title{font-size:clamp(3rem,11.5vw,6.5rem);}
+    .hero-art{width:75%;right:-12%;}
+    .hero-signature{padding-bottom:8px;}
+    .hero-signature img{width:48px;}
+    .hero-signature span{display:none;}
+    .hero-motion{margin-right:20px;}
   }
   @media (max-width:480px){
-    .marquee-track span{font-size:1.1rem;padding:0 18px;gap:16px;}
-    .hero-sub p{font-size:.95rem;}
+    .hero{min-height:780px;}
+    .hero-title{font-size:clamp(2rem,13vw,4rem);margin-bottom:26px;}
+    .hero-meta{font-size:.8125rem;gap:12px;}
+    .hero-meta span:last-child{max-width:9ch;text-align:right;}
+    .hero-art{top:136px;bottom:auto;height:440px;width:115%;right:-35%;opacity:.8;}
+    .hero-art::after{background:linear-gradient(0deg,var(--red) 0%,transparent 55%);}
+    .hero-bottom{display:block;}
+    .hero-copy{max-width:100%;}
+    .hero-copy p{max-width:34ch;}
+    .hero-actions{gap:12px 20px;margin-top:20px;}
+    .hero-link{padding:14px 16px;gap:12px;}
+    .hero-signature{display:none;}
+    .hero .marquee{margin-top:18px;}
+    .marquee-track span{font-size:.875rem;padding:0 18px;gap:16px;}
     .contact-actions .btn-primary, .contact-actions .btn-ghost{
       width:100%;text-align:center;padding:16px 24px;
     }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .hero-art img{transform:none;}
+    .hero-motion{display:none;}
   }
 
   /* ---------- GALERIA DISEÑO GRAFICO ---------- */
@@ -829,27 +896,44 @@
       <a href="#contacto">Contacto</a>
     </nav>
     <a href="#contacto" class="nav-cta">Hablemos</a>
-    <button class="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="hero-art" aria-hidden="true">
+    <img src="img/hero-editorial.webp" alt="" width="1024" height="1536" fetchpriority="high" decoding="async">
+  </div>
   <div class="hero-inner">
-    <div class="hero-tag">
-      <span class="eyebrow"><span class="eyebrow-text" data-text="Agencia creativa integral">Agencia creativa integral</span></span>
+    <div class="hero-meta">
+      <span>desruptivo / Agencia creativa integral</span>
+      <span>Mérida, México</span>
     </div>
-    <h1 class="hero-word"><img src="img/logo-desruptivo.png" alt="Desruptivo"></h1>
-    <div class="hero-sub">
-      <p>Branding, digital, video y marketing bajo una sola dirección creativa. Hacemos ruido con intención — todos los ojos puestos en lo que construimos.</p>
+    <h1 class="hero-title" id="heroTitle">
+      <span class="hero-title-line">Hazlos</span>
+      <span class="hero-title-line">sentir algo</span>
+      <span class="hero-title-line"><span class="hero-title-highlight">distinto.</span></span>
+    </h1>
+    <div class="hero-bottom">
+      <div class="hero-copy">
+        <p>Marketing, ingeniería y multimedia bajo una misma dirección creativa. De la idea a lo que tu marca pone en el mundo.</p>
+        <div class="hero-actions">
+          <a class="hero-link" href="https://wa.me/529999064262?text=Hola%20Desruptivo%2C%20quiero%20platicar%20sobre%20un%20proyecto" target="_blank" rel="noopener">Hablemos de tu proyecto <span aria-hidden="true">↗</span></a>
+          <a class="hero-secondary" href="#servicios">Qué hacemos</a>
+        </div>
+      </div>
+      <div class="hero-signature">
+        <img src="img/mascota-desruptivo.png" alt="Ruti, mascota de desruptivo" width="1281" height="1216">
+        <span lang="en">There is<br>no one way.</span>
+      </div>
     </div>
   </div>
-  <img src="img/mascota-desruptivo.png" alt="Mascota Desruptivo" class="hero-mascot">
-  <img src="img/hero-estrella-deco.png" alt="" class="hero-star-deco">
-  <div class="marquee">
+  <button class="hero-motion" type="button" aria-pressed="false" hidden>Pausar movimiento</button>
+  <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span>
-      <span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span>
+      <span>Marketing</span><span>Ingeniería</span><span>Multimedia</span><span>There is no one way</span>
+      <span>Marketing</span><span>Ingeniería</span><span>Multimedia</span><span>There is no one way</span>
     </div>
   </div>
 </section>
@@ -1078,6 +1162,52 @@
 </footer>
 
 <script>
+  // Portada: movimiento leve, opcional y limitado a un frame por actualización.
+  const hero = document.querySelector('.hero');
+  const motionButton = document.querySelector('.hero-motion');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  let motionPaused = false;
+  let heroFrame = 0;
+  let heroX = 0;
+  let heroY = 0;
+  const resetHeroMotion = () => {
+    cancelAnimationFrame(heroFrame);
+    heroFrame = 0;
+    hero.style.setProperty('--hero-shift-x', '0px');
+    hero.style.setProperty('--hero-shift-y', '0px');
+  };
+  const syncHeroMotion = () => {
+    const paused = motionPaused || reducedMotion.matches;
+    hero.dataset.motion = paused ? 'paused' : 'playing';
+    motionButton.hidden = reducedMotion.matches;
+    motionButton.setAttribute('aria-pressed', String(motionPaused));
+    motionButton.textContent = motionPaused ? 'Activar movimiento' : 'Pausar movimiento';
+    if (paused) resetHeroMotion();
+  };
+  motionButton.addEventListener('click', () => {
+    motionPaused = !motionPaused;
+    syncHeroMotion();
+  });
+  reducedMotion.addEventListener('change', syncHeroMotion);
+  finePointer.addEventListener('change', resetHeroMotion);
+  hero.addEventListener('pointermove', (event) => {
+    if (motionPaused || reducedMotion.matches || !finePointer.matches) return;
+    const bounds = hero.getBoundingClientRect();
+    heroX = ((event.clientX - bounds.left) / bounds.width - .5) * 14;
+    heroY = ((event.clientY - bounds.top) / bounds.height - .5) * 10;
+    if (!heroFrame) heroFrame = requestAnimationFrame(() => {
+      hero.style.setProperty('--hero-shift-x', heroX.toFixed(2) + 'px');
+      hero.style.setProperty('--hero-shift-y', heroY.toFixed(2) + 'px');
+      heroFrame = 0;
+    });
+  }, {passive:true});
+  hero.addEventListener('pointerleave', resetHeroMotion);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) resetHeroMotion();
+  });
+  syncHeroMotion();
+
   // Reveal on scroll
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
@@ -1103,16 +1233,31 @@
     });
   });
 
-  // Mobile burger -> simple toggle of a stacked menu
+  // Navegación móvil: posición real del header y cierre accesible.
   const burger = document.querySelector('.burger');
-  let menuOpen = false;
+  const siteHeader = document.querySelector('header');
+  const closeMobileMenu = (restoreFocus = false) => {
+    document.querySelector('.mobile-menu')?.remove();
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Abrir menú');
+    burger.removeAttribute('aria-controls');
+    if (restoreFocus) burger.focus();
+  };
+  const positionMobileMenu = () => {
+    const menu = document.querySelector('.mobile-menu');
+    if (!menu) return;
+    const top = siteHeader.getBoundingClientRect().bottom;
+    menu.style.top = top + 'px';
+    menu.style.maxHeight = 'calc(100svh - ' + top + 'px)';
+  };
   burger.addEventListener('click', ()=>{
-    menuOpen = !menuOpen;
     let menu = document.querySelector('.mobile-menu');
     if(!menu){
-      menu = document.createElement('div');
+      menu = document.createElement('nav');
       menu.className = 'mobile-menu';
-      menu.style.cssText = 'position:fixed;top:64px;left:0;right:0;background:#e8e7df;border-bottom:2px solid #27272a;display:flex;flex-direction:column;padding:8px 20px;z-index:99;max-height:calc(100svh - 64px);overflow-y:auto;';
+      menu.id = 'mobileMenu';
+      menu.setAttribute('aria-label', 'Navegación principal');
+      menu.style.cssText = 'position:fixed;left:0;right:0;background:#e8e7df;border-bottom:2px solid #27272a;display:flex;flex-direction:column;padding:8px 20px;z-index:99;overflow-y:auto;';
       menu.innerHTML = `
         <a href="#servicios" style="font-weight:700;text-transform:uppercase;padding:16px 0;border-bottom:1px solid #d6d6ce;">Servicios</a>
         <a href="#manifiesto" style="font-weight:700;text-transform:uppercase;padding:16px 0;border-bottom:1px solid #d6d6ce;">Manifiesto</a>
@@ -1121,11 +1266,23 @@
         <a href="#contacto" style="font-weight:700;text-transform:uppercase;padding:16px 0;">Contacto</a>
       `;
       document.body.appendChild(menu);
-      menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{menu.remove(); menuOpen=false;}));
+      positionMobileMenu();
+      burger.setAttribute('aria-expanded', 'true');
+      burger.setAttribute('aria-label', 'Cerrar menú');
+      burger.setAttribute('aria-controls', 'mobileMenu');
+      menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>closeMobileMenu()));
+      menu.querySelector('a')?.focus();
     } else {
-      menu.remove();
+      closeMobileMenu(true);
     }
   });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.querySelector('.mobile-menu')) closeMobileMenu(true);
+  });
+  window.addEventListener('resize', () => {
+    if (window.matchMedia('(min-width:901px)').matches) closeMobileMenu();
+    else positionMobileMenu();
+  }, {passive:true});
 
   // Carrusel de video (mobile): dots de paginación
   const workGrid = document.getElementById('workGrid');
