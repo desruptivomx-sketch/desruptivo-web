@@ -147,12 +147,12 @@
   .burger{display:none;background:none;border:none;cursor:pointer;padding:6px;}
   .burger span{display:block;width:24px;height:3px;background:var(--carbon);margin:5px 0;}
 
-  /* ---------- HERO ---------- */
+  /* ---------- HERO: CARTEL A SANGRE ---------- */
   .hero{
     position:relative;
     min-height:100svh;
-    display:flex;flex-direction:column;justify-content:center;
-    padding-top:80px;
+    display:flex;flex-direction:column;
+    padding:64px 0 0;
     overflow:hidden;
     background:
       radial-gradient(circle, var(--carbon) 1.6px, transparent 1.6px) 0 0/16px 16px,
@@ -165,39 +165,59 @@
     z-index:0;
     opacity:.94;
   }
-  .hero-inner{position:relative;z-index:2;width:100%;}
-  .hero-tag{
-    max-width:1280px;margin:0 auto;padding:0 32px;
-    margin-bottom:18px;
+  .hero-inner{
+    position:relative;z-index:2;width:100%;
+    flex:1;
+    display:flex;flex-direction:column;justify-content:flex-start;
+    gap:clamp(12px,2vh,22px);
+    padding:clamp(14px,2.5vh,34px) 0 0;
   }
+  .hero-tag{padding:0 20px;}
   .hero-tag .eyebrow{color:var(--carbon);}
+
+  /* El logotipo ocupa el ancho completo y sus letras se rellenan de textura */
   .hero-word{
-    padding-left:32px;
-    padding-right:32px;
-    position:relative;
-    display:block;
+    position:relative;display:block;
+    padding:0;
   }
-  .hero-word svg, .hero-word img{
-    width:clamp(200px, 74vw, 1180px);
-    max-width:100%;
-    height:auto;
-    display:block;
+  .hero-word img{
+    width:100%;max-width:none;height:auto;display:block;
   }
-  .hero-sub{
-    max-width:1280px;margin:22px auto 0;padding:0 32px;
-    display:flex;justify-content:space-between;align-items:flex-end;
-    gap:24px;flex-wrap:wrap;
-  }
+  .hero-sub{padding:0 20px;}
   .hero-sub p{
-    font-size:.98rem;max-width:460px;font-weight:450;line-height:1.5;
+    font-size:.95rem;max-width:44ch;font-weight:450;line-height:1.5;
     color:var(--carbon);
   }
+
+  /* Tira de disciplinas: ocupa el hueco con información */
+  .hero-disc{
+    list-style:none;
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:0;
+    margin:0 20px;
+    border-top:2px solid var(--carbon);
+  }
+  .hero-disc li{
+    font-family:var(--f-mono);
+    font-size:.7rem;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:10px 0 10px 12px;
+    border-bottom:1px solid rgba(39,39,42,.22);
+    position:relative;
+  }
+  .hero-disc li:nth-child(odd){border-right:1px solid rgba(39,39,42,.22);}
+  .hero-disc li::before{
+    content:"";position:absolute;left:0;top:calc(50% - 2px);
+    width:4px;height:4px;background:var(--red);transform:rotate(45deg);
+  }
+
   .hero-mascot{
     position:absolute;
     right:6%;
-    bottom:-4%;
-    width:min(300px, 22vw);
+    bottom:54px;
+    width:min(300px, 21vw);
     z-index:3;
+    cursor:pointer;
     animation:mascotBob 3.2s ease-in-out infinite;
   }
   @keyframes mascotBob{
@@ -207,7 +227,7 @@
 
   .marquee{
     position:relative;z-index:2;
-    margin-top:56px;
+    margin-top:clamp(20px,4vh,48px);
     background:var(--carbon);
     border-top:3px solid var(--carbon);
     border-bottom:3px solid var(--carbon);
@@ -232,10 +252,16 @@
   }
 
   .scroll-cue{
-    position:absolute;left:32px;bottom:18px;z-index:2;
+    position:absolute;left:20px;bottom:calc(54px + 16px);z-index:4;
     display:flex;align-items:center;gap:10px;
-    font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    font-family:var(--f-mono);
+    font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--carbon);
   }
+  .scroll-cue .line{animation:cueSlide 2.4s ease-in-out infinite;}
+  @keyframes cueSlide{0%,100%{transform:scaleX(1);opacity:1;}50%{transform:scaleX(.4);opacity:.5;}}
+  @media (prefers-reduced-motion:reduce){.scroll-cue .line{animation:none;}}
+  @media (min-width:901px){.scroll-cue{left:32px;bottom:calc(58px + 20px);}}
   .scroll-cue .line{width:34px;height:2px;background:var(--carbon);}
 
   /* ---------- SECTION GENERIC ---------- */
@@ -718,47 +744,6 @@
     .services-cam-deco{width:48px;top:20px;}
   }
 
-  /* ---------- HERO QUE SE QUIEBRA AL HACER SCROLL ---------- */
-  .hero.shatter-ready > :not(.shatter){transition:opacity .15s ease;}
-  .hero.shatter-active > :not(.shatter){opacity:0 !important;}
-  .shatter{
-    position:absolute;inset:0;z-index:6;pointer-events:none;
-    opacity:0;visibility:hidden;
-    perspective:1200px;
-  }
-  .hero.shatter-active .shatter{opacity:1;visibility:visible;}
-  .shard{
-    position:absolute;inset:0;overflow:hidden;
-    will-change:transform,opacity;
-    transform-origin:var(--ox) var(--oy);
-    backface-visibility:hidden;
-  }
-  .shard-inner{
-    position:absolute;inset:0;
-    background:
-      radial-gradient(circle, var(--carbon) 1.6px, transparent 1.6px) 0 0/16px 16px,
-      var(--cream);
-  }
-  .shard-inner::before{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(115deg, var(--cream) 0%, var(--cream) 46%, var(--red) 47%, var(--red) 100%);
-    clip-path:polygon(0 0,100% 0,100% 100%, 38% 100%);
-    opacity:.94;z-index:0;
-  }
-  .shard-inner{isolation:isolate;}
-  .shard-inner .marquee{position:relative;z-index:1;}
-  .hero.shatter-active{background:transparent;overflow:visible;z-index:4;}
-  .hero.shatter-active::before{opacity:0;}
-  .shard .marquee-track{animation-play-state:paused;}
-  .shard .hero-mascot,.shard .hero-star-deco{animation:none;}
-  .cracks{
-    position:absolute;inset:0;width:100%;height:100%;z-index:7;pointer-events:none;
-    opacity:0;
-  }
-  .cracks path{fill:none;stroke:var(--carbon);stroke-width:1.6;stroke-linejoin:round;
-    stroke-dasharray:var(--len);stroke-dashoffset:var(--len);}
-  @media (prefers-reduced-motion:reduce){ .shatter,.cracks{display:none;} }
-
   /* ---------- MODO ROTO ---------- */
   .hero-mascot{cursor:pointer;user-select:none;-webkit-user-drag:none;}
   body.roto-armed [data-shard]{
@@ -828,18 +813,28 @@
   .deck-dots span.active{background:var(--carbon);transform:scale(1.3);}
 
   /* ---------- RESPONSIVE ---------- */
+  @media (min-width:901px){
+    .hero-inner{justify-content:center;gap:clamp(18px,3vh,32px);}
+    .hero-tag,.hero-sub{padding:0 32px;}
+    .hero-word{padding:0 32px;}
+    .hero-word img{width:auto;max-height:46vh;}
+    .hero-disc{grid-template-columns:repeat(4,1fr);margin:0 32px;}
+    .hero-disc li{border-right:1px solid rgba(39,39,42,.22);padding:14px 0 14px 16px;font-size:.74rem;}
+    .hero-disc li:last-child{border-right:none;}
+    .hero-mascot{bottom:auto;top:20%;right:3%;width:min(240px,17vw);}
+  }
   @media (max-width:900px){
     nav.links, .nav-cta{display:none;}
     .burger{display:block;}
     .ticket-grid{grid-template-columns:1fr;}
     .stats-grid{grid-template-columns:repeat(2,1fr);}
     .hero-mascot{
-      position:absolute;
-      top:96px; bottom:auto;
-      right:20px;
-      width:20vw; min-width:64px; max-width:110px;
+      top:auto; bottom:54px;
+      right:6%;
+      width:44vw; min-width:130px; max-width:210px;
     }
-    .hero-word{padding-left:16px;padding-right:16px;}
+    .hero-word{padding:0;width:116%;margin-left:-8%;}
+    .hero-star-deco{display:none;}
     .manifesto .wrap{gap:32px;}
     .contact-meta{flex-direction:column;}
     .wrap{padding:0 20px;}
@@ -939,13 +934,22 @@
     <div class="hero-tag">
       <span class="eyebrow"><span class="eyebrow-text" data-text="Agencia creativa integral">Agencia creativa integral</span></span>
     </div>
-    <h1 class="hero-word"><img src="img/logo-desruptivo.png" alt="Desruptivo"></h1>
+    <h1 class="hero-word">
+      <img src="img/logo-desruptivo.png" alt="Desruptivo">
+    </h1>
     <div class="hero-sub">
-      <p>Branding, digital, video y marketing bajo una sola dirección creativa. Hacemos ruido con intención — todos los ojos puestos en lo que construimos.</p>
+      <p>Branding, digital, video y marketing bajo una sola dirección creativa. Hacemos ruido con intención.</p>
     </div>
+    <ul class="hero-disc">
+      <li>Marketing</li>
+      <li>Ingeniería</li>
+      <li>Multimedia</li>
+      <li>Dirección creativa</li>
+    </ul>
   </div>
   <img src="img/mascota-desruptivo.png" alt="Mascota Desruptivo" class="hero-mascot" id="mascot" title="¿Y si lo rompes?">
   <img src="img/hero-estrella-deco.png" alt="" class="hero-star-deco">
+  <div class="scroll-cue" aria-hidden="true"><span class="line"></span>Desliza</div>
   <div class="marquee">
     <div class="marquee-track">
       <span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span><span>All Eyes On Us</span>
@@ -1206,99 +1210,12 @@
   });
 
   // =========================================================
-  // 1) HERO QUE SE QUIEBRA AL HACER SCROLL
-  // =========================================================
-  (function heroShatter(){
-    const hero=document.querySelector('.hero');
-    if(!hero || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    // Malla irregular de puntos -> triángulos (vidrio roto)
-    const COLS=6, ROWS=4, pts=[];
-    for(let r=0;r<=ROWS;r++){ pts.push([]); for(let c=0;c<=COLS;c++){
-      const jx=(c===0||c===COLS)?0:(Math.random()-.5)*.6, jy=(r===0||r===ROWS)?0:(Math.random()-.5)*.6;
-      pts[r].push([ (c+jx)/COLS*100, (r+jy)/ROWS*100 ]);
-    }}
-    const tris=[];
-    for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
-      const a=pts[r][c], b=pts[r][c+1], d=pts[r+1][c], e=pts[r+1][c+1];
-      if(Math.random()<.5){ tris.push([a,b,e]); tris.push([a,e,d]); } else { tris.push([a,b,d]); tris.push([b,e,d]); }
-    }
-
-    // Contenedor de fragmentos con clones del hero
-    const wrap=document.createElement('div'); wrap.className='shatter'; wrap.setAttribute('aria-hidden','true');
-    const src=Array.from(hero.children);
-    const shards=tris.map((t,i)=>{
-      const cx=(t[0][0]+t[1][0]+t[2][0])/3, cy=(t[0][1]+t[1][1]+t[2][1])/3;
-      const sh=document.createElement('div'); sh.className='shard';
-      sh.style.clipPath=`polygon(${t.map(p=>p[0].toFixed(2)+'% '+p[1].toFixed(2)+'%').join(',')})`;
-      sh.style.setProperty('--ox',cx+'%'); sh.style.setProperty('--oy',cy+'%');
-      const inner=document.createElement('div'); inner.className='shard-inner';
-      src.forEach(el=>{ const c=el.cloneNode(true); c.removeAttribute('id'); c.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id')); inner.appendChild(c); });
-      sh.appendChild(inner); wrap.appendChild(sh);
-      // Parámetros de caída únicos por pedazo
-      return {el:sh, cx, cy, dx:(cx-50)*(1.4+Math.random()*1.6), dy:120+Math.random()*420+(cy/100)*160,
-              rx:(Math.random()-.5)*140, ry:(Math.random()-.5)*160, rz:(Math.random()-.5)*90,
-              delay:Math.random()*.25 + (cy/100)*.15};
-    });
-    hero.appendChild(wrap);
-
-    // Grietas (SVG con las aristas, en píxeles reales)
-    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.setAttribute('class','cracks');
-    const seen=new Set(), edges=[];
-    tris.forEach(t=>{ for(let i=0;i<3;i++){ const p=t[i], q=t[(i+1)%3];
-      const k=[p,q].map(v=>v.map(n=>n.toFixed(2)).join(',')).sort().join('|'); if(seen.has(k)) continue; seen.add(k);
-      const edge=(v)=>v[0]<.01||v[0]>99.99||v[1]<.01||v[1]>99.99;
-      if(edge(p)&&edge(q)&&(p[0]===q[0]||p[1]===q[1])) continue;
-      const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-      svg.appendChild(path); edges.push({p,q,path});
-    }});
-    function layoutCracks(){
-      const W=hero.offsetWidth, H=hero.offsetHeight;
-      svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-      edges.forEach(e=>{
-        const x1=e.p[0]/100*W, y1=e.p[1]/100*H, x2=e.q[0]/100*W, y2=e.q[1]/100*H;
-        e.path.setAttribute('d',`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`);
-        e.path.style.setProperty('--len', Math.hypot(x2-x1,y2-y1).toFixed(1));
-      });
-    }
-    layoutCracks();
-    hero.appendChild(svg);
-    const paths=Array.from(svg.children);
-    hero.classList.add('shatter-ready');
-
-    const ease=t=>t<0?0:t>1?1:t*t*(3-2*t);
-    let raf=null;
-    function update(){
-      raf=null;
-      const h=hero.offsetHeight;
-      const p=Math.min(1, Math.max(0, scrollY/(h*.85)));   // 0 arriba → 1 al pasar el hero
-      const crack=ease(p/.12);                              // grietas: 0–12%
-      const fall=ease((p-.1)/.62);                          // caída: 10%–72%
-      svg.style.opacity = p>0 && p<.98 ? Math.min(1, crack*1.2) * (1-fall*.9) : 0;
-      paths.forEach((pt,i)=>{ const local=ease((crack-(i%7)*.06)/.6); pt.style.strokeDashoffset=(1-local)*parseFloat(pt.style.getPropertyValue('--len')); });
-      const active=p>.09;
-      hero.classList.toggle('shatter-active', active);
-      if(active){
-        shards.forEach(s=>{
-          const k=ease((fall - s.delay)/(1-s.delay));
-          s.el.style.transform=`translate3d(${s.dx*k}px, ${s.dy*k}px, ${-300*k}px) rotateX(${s.rx*k}deg) rotateY(${s.ry*k}deg) rotateZ(${s.rz*k}deg)`;
-          s.el.style.opacity = 1 - Math.max(0,(k-.55)/.45);
-        });
-      }
-    }
-    addEventListener('scroll', ()=>{ if(!raf) raf=requestAnimationFrame(update); }, {passive:true});
-    addEventListener('resize', ()=>{ layoutCracks(); if(!raf) raf=requestAnimationFrame(update); });
-    update();
-  })();
-
-  // =========================================================
   // 2) MODO ROTO: 3 clics a la mascota o escribir "roto"
   // =========================================================
   (function modoRoto(){
     // Marcar fragmentos: cada bloque directo de sección y footer
     document.querySelectorAll('section > *, footer > *, section .wrap > *').forEach(el=>{
-      if(!el.matches('canvas,.shatter,.cracks')) el.setAttribute('data-shard','');
+      if(!el.matches('canvas')) el.setAttribute('data-shard','');
     });
     const shards = ()=>Array.from(document.querySelectorAll('[data-shard]'));
     const toast = document.createElement('div'); toast.className='roto-toast'; document.body.appendChild(toast);
