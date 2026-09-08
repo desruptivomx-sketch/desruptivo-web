@@ -222,26 +222,54 @@
     color:var(--paper);
   }
 
-  /* Tira de disciplinas */
+  /* Tira de disciplinas: banda diagonal impresa */
   .hero-disc{
     list-style:none;
-    display:grid;grid-template-columns:repeat(2,1fr);
-    margin:0 22px;
+    width:104%;margin:clamp(6px,1.4vh,18px) 0 0 -2%;
+    transform:rotate(-2.4deg);
+    background:var(--paper);
     border-top:2px solid var(--carbon);
+    border-bottom:2px solid var(--carbon);
+    padding:9px clamp(24px,3.4vw,46px);
+    display:flex;align-items:center;justify-content:space-between;
+    gap:clamp(8px,2vw,28px);
+    box-shadow:0 10px 22px rgba(24,4,4,.28);
+    overflow:hidden;
   }
   .hero-disc li{
     font-family:var(--f-mono);
-    font-size:.7rem;font-weight:600;
+    font-size:clamp(.58rem,2.1vw,.76rem);
+    font-weight:600;
     letter-spacing:.1em;text-transform:uppercase;
-    color:var(--paper);
-    padding:10px 0 10px 12px;
-    border-bottom:1px solid rgba(239,234,222,.3);
-    position:relative;
+    color:var(--red-ink);
+    white-space:nowrap;
+    display:flex;align-items:center;gap:.6em;
+    /* estado inicial del revelado */
+    clip-path:inset(0 100% 0 0);
+    opacity:0;
+    transform:translateY(6px);
+    transition:clip-path .55s cubic-bezier(.2,.75,.2,1), opacity .35s ease, transform .55s cubic-bezier(.2,.75,.2,1);
   }
-  .hero-disc li:nth-child(odd){border-right:1px solid rgba(239,234,222,.3);}
   .hero-disc li::before{
-    content:"";position:absolute;left:0;top:calc(50% - 2px);
-    width:4px;height:4px;background:var(--carbon);transform:rotate(45deg);
+    content:"";
+    width:5px;height:5px;background:var(--carbon);
+    transform:rotate(45deg);flex:none;
+  }
+  .hero-disc.in li{clip-path:inset(0 0 0 0);opacity:1;transform:translateY(0);}
+  .hero-disc.in li:nth-child(1){transition-delay:.05s;}
+  .hero-disc.in li:nth-child(2){transition-delay:.19s;}
+  .hero-disc.in li:nth-child(3){transition-delay:.33s;}
+  .hero-disc.in li:nth-child(4){transition-delay:.47s;}
+  .disc-short{display:none;}
+  @media (max-width:620px){
+    .hero-disc{padding:9px 26px;gap:5px;justify-content:center;}
+    .hero-disc li{font-size:.56rem;letter-spacing:.05em;gap:.45em;}
+    .hero-disc li::before{width:4px;height:4px;}
+    .disc-short{display:inline;}
+    .disc-long{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-disc li{clip-path:none;opacity:1;transform:none;transition:none;}
   }
 
   /* La mascota como silueta impresa */
@@ -854,9 +882,6 @@
     .hero-tag,.hero-sub{padding:0 32px;}
     .hero-word{padding:0 32px;}
     .hero-word-ink{max-height:44vh;aspect-ratio:auto;height:44vh;}
-    .hero-disc{grid-template-columns:repeat(4,1fr);margin:0 32px;}
-    .hero-disc li{border-right:1px solid rgba(239,234,222,.3);padding:14px 0 14px 16px;font-size:.74rem;}
-    .hero-disc li:last-child{border-right:none;}
     .hero-mascot{top:auto;bottom:40px;right:3.5%;width:min(215px,15vw);}
   }
   @media (max-width:900px){
@@ -875,7 +900,6 @@
     .contact-meta{flex-direction:column;}
     .wrap{padding:0 20px;}
     .hero-tag,.hero-sub{padding:0 18px;}
-    .hero-disc{margin:0 18px;}
     section{padding:80px 0;}
   }
   @media (max-width:480px){
@@ -982,7 +1006,7 @@
       <li>Marketing</li>
       <li>Ingeniería</li>
       <li>Multimedia</li>
-      <li>Dirección creativa</li>
+      <li><span class="disc-short">Dir.</span><span class="disc-long">Dirección</span> creativa</li>
     </ul>
   </div>
   <img src="img/mascota-desruptivo.png" alt="Mascota Desruptivo" class="hero-mascot" id="mascot" title="¿Y si lo rompes?">
@@ -1361,6 +1385,16 @@
     deck.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') next(1); if(e.key==='ArrowLeft') prev(); });
     deck.tabIndex=0;
     layout();
+  })();
+
+  // Banda de disciplinas: revelado escalonado
+  (function discBand(){
+    const band=document.querySelector('.hero-disc');
+    if(!band) return;
+    const io=new IntersectionObserver(([e])=>{
+      if(e.isIntersecting){ band.classList.add('in'); io.disconnect(); }
+    },{threshold:.4});
+    io.observe(band);
   })();
 
   // Cabecera: transparente sobre el hero, sólida al bajar
