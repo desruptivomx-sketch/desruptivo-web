@@ -222,54 +222,65 @@
     color:var(--paper);
   }
 
-  /* Tira de disciplinas: banda diagonal impresa */
+  /* Tira de disciplinas: cinta diagonal con volumen */
   .hero-disc{
     list-style:none;
-    width:104%;margin:clamp(6px,1.4vh,18px) 0 0 -2%;
-    transform:rotate(-2.4deg);
+    width:104%;margin:clamp(8px,1.8vh,22px) 0 0 -2%;
+    transform:rotate(-2.4deg) rotateX(9deg);
+    transform-origin:50% 50%;
     background:var(--paper);
     border-top:2px solid var(--carbon);
-    border-bottom:2px solid var(--carbon);
-    padding:9px clamp(24px,3.4vw,46px);
+    padding:11px clamp(24px,3.4vw,46px);
     display:flex;align-items:center;justify-content:space-between;
-    gap:clamp(8px,2vw,28px);
-    box-shadow:0 10px 22px rgba(24,4,4,.28);
+    gap:clamp(6px,2vw,28px);
+    /* grosor del papel + sombra proyectada */
+    box-shadow:
+      0 5px 0 0 var(--carbon),
+      0 7px 0 0 rgba(24,4,4,.55),
+      0 18px 30px rgba(24,4,4,.4);
     overflow:hidden;
   }
   .hero-disc li{
-    font-family:var(--f-mono);
-    font-size:clamp(.58rem,2.1vw,.76rem);
-    font-weight:600;
-    letter-spacing:.1em;text-transform:uppercase;
+    font-family:var(--f-wide);
+    font-size:clamp(.62rem,2.2vw,.92rem);
+    font-weight:700;
+    letter-spacing:.02em;word-spacing:-.14em;
+    text-transform:uppercase;
     color:var(--red-ink);
     white-space:nowrap;
-    display:flex;align-items:center;gap:.6em;
-    /* estado inicial del revelado */
-    clip-path:inset(0 100% 0 0);
+    display:flex;align-items:center;gap:.5em;
+    /* extrusión de las letras */
+    text-shadow:
+      1px 1px 0 rgba(24,4,4,.35),
+      2px 2px 0 rgba(24,4,4,.22),
+      3px 3px 0 rgba(24,4,4,.12);
+    /* estado inicial: volteada hacia atrás */
+    transform:perspective(520px) rotateX(-88deg);
+    transform-origin:50% 100%;
     opacity:0;
-    transform:translateY(6px);
-    transition:clip-path .55s cubic-bezier(.2,.75,.2,1), opacity .35s ease, transform .55s cubic-bezier(.2,.75,.2,1);
+    transition:transform .62s cubic-bezier(.18,.85,.24,1.02), opacity .3s ease;
   }
   .hero-disc li::before{
     content:"";
-    width:5px;height:5px;background:var(--carbon);
+    width:6px;height:6px;background:var(--carbon);
     transform:rotate(45deg);flex:none;
   }
-  .hero-disc.in li{clip-path:inset(0 0 0 0);opacity:1;transform:translateY(0);}
-  .hero-disc.in li:nth-child(1){transition-delay:.05s;}
-  .hero-disc.in li:nth-child(2){transition-delay:.19s;}
-  .hero-disc.in li:nth-child(3){transition-delay:.33s;}
-  .hero-disc.in li:nth-child(4){transition-delay:.47s;}
+  .hero-disc.in li{transform:perspective(520px) rotateX(0deg);opacity:1;}
+  .hero-disc.in li:nth-child(1){transition-delay:.06s;}
+  .hero-disc.in li:nth-child(2){transition-delay:.2s;}
+  .hero-disc.in li:nth-child(3){transition-delay:.34s;}
+  .hero-disc.in li:nth-child(4){transition-delay:.48s;}
   .disc-short{display:none;}
   @media (max-width:620px){
-    .hero-disc{padding:9px 26px;gap:5px;justify-content:center;}
-    .hero-disc li{font-size:.56rem;letter-spacing:.05em;gap:.45em;}
-    .hero-disc li::before{width:4px;height:4px;}
+    .hero-disc{padding:10px 20px;gap:4px;justify-content:space-between;}
+    .hero-disc li{font-size:.66rem;letter-spacing:0;gap:.35em;
+      text-shadow:1px 1px 0 rgba(24,4,4,.3), 2px 2px 0 rgba(24,4,4,.16);}
+    .hero-disc li::before{width:5px;height:5px;}
     .disc-short{display:inline;}
     .disc-long{display:none;}
   }
   @media (prefers-reduced-motion:reduce){
-    .hero-disc li{clip-path:none;opacity:1;transform:none;transition:none;}
+    .hero-disc li{transform:none;opacity:1;transition:none;}
   }
 
   /* La mascota como silueta impresa */
