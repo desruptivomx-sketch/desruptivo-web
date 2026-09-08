@@ -64,16 +64,22 @@
   img{display:block;max-width:100%;}
 
   .eyebrow{
-    font-family:'Casual Human', var(--f-mono);
-    font-weight:700;
-    font-size:1.35rem;
-    letter-spacing:.02em;
+    font-family:var(--f-mono);
+    font-weight:600;
+    font-size:.74rem;
+    letter-spacing:.14em;
     text-transform:uppercase;
     display:inline-flex;
     align-items:center;
     gap:.5em;
   }
-  .eyebrow-text{transform:rotate(-4deg);}
+  .eyebrow-hero{
+    font-family:'Casual Human', var(--f-mono);
+    font-weight:700;
+    font-size:1.35rem;
+    letter-spacing:.02em;
+  }
+  .eyebrow-hero .eyebrow-text{transform:rotate(-4deg);}
   .eyebrow::before{
     content:"";
     width:.5em;height:.5em;
@@ -1008,7 +1014,7 @@
   <div class="hero-print" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="hero-tag">
-      <span class="eyebrow"><span class="eyebrow-text" data-text="Agencia creativa integral">Agencia creativa integral</span></span>
+      <span class="eyebrow eyebrow-hero"><span class="eyebrow-text" data-text="Agencia creativa integral">Agencia creativa integral</span></span>
     </div>
     <h1 class="hero-word">
       <span class="hero-word-ink" role="img" aria-label="Desruptivo"></span>
