@@ -6,11 +6,19 @@
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#e8e7df">
 <title>DESRUPTIVO — Agencia Creativa Integral</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700;800;900&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
+  @font-face{font-family:'Squid Boy';src:url('fonts/SquidBoy.woff2') format('woff2');font-weight:400;font-display:swap;}
+  @font-face{font-family:'Squid Boy';src:url('fonts/SquidBoy-Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+  @font-face{font-family:'New Black';src:url('fonts/NewBlack-Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+  @font-face{font-family:'New Black';src:url('fonts/NewBlack-Medium.woff2') format('woff2');font-weight:500;font-display:swap;}
+  @font-face{font-family:'New Black';src:url('fonts/NewBlack-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
+  @font-face{font-family:'New Black';src:url('fonts/NewBlack-Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+  @font-face{font-family:'New Black';src:url('fonts/NewBlack-ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap;}
+  @font-face{font-family:'Monoglyphic';src:url('fonts/Monoglyphic-VF.woff2') format('woff2');font-weight:100 900;font-display:swap;}
   :root{
+    --f-display:'Squid Boy','New Black',sans-serif;
+    --f-wide:'New Black','Squid Boy',sans-serif;
+    --f-mono:'Monoglyphic',ui-monospace,monospace;
     color-scheme:light;
     --carbon:#27272a;
     --cream:#e8e7df;
@@ -24,28 +32,38 @@
   body{
     background:var(--cream);
     color:var(--carbon);
-    font-family:'Archivo',sans-serif;
+    font-family:var(--f-mono);
+    font-weight:450;
     overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--red);color:var(--cream);}
 
-  h1,h2,h3,.display{
-    font-family:'League Spartan',sans-serif;
+  h1,h2,.display{
+    font-family:var(--f-display);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0;
+    line-height:0.95;
+  }
+  h3{
+    font-family:var(--f-wide);
     font-weight:800;
     text-transform:uppercase;
-    letter-spacing:-0.01em;
-    line-height:0.92;
+    letter-spacing:.01em;
+    word-spacing:-.18em;
+    line-height:1;
   }
+  nav.links a,.nav-cta,.btn-primary,.btn-ghost,.stat-number{word-spacing:-.15em;}
 
   a{color:inherit;text-decoration:none;}
   img{display:block;max-width:100%;}
 
   .eyebrow{
-    font-family:'Archivo',sans-serif;
-    font-weight:700;
-    font-size:.72rem;
-    letter-spacing:.18em;
+    font-family:var(--f-mono);
+    font-weight:600;
+    font-size:.74rem;
+    letter-spacing:.14em;
     text-transform:uppercase;
     display:inline-flex;
     align-items:center;
@@ -108,7 +126,8 @@
   .nav-logo svg{height:26px;width:auto;display:block;}
   nav.links{display:flex;gap:34px;}
   nav.links a{
-    font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    font-family:var(--f-wide);
+    font-weight:600;font-size:.8rem;letter-spacing:.02em;
     text-transform:uppercase;position:relative;padding:4px 0;
   }
   nav.links a::after{
@@ -118,8 +137,9 @@
   nav.links a:hover::after{width:100%;}
   .nav-cta{
     background:var(--carbon);color:var(--cream);
-    padding:10px 22px;font-weight:700;font-size:.8rem;
-    text-transform:uppercase;letter-spacing:.04em;
+    padding:10px 22px;font-weight:700;font-size:.78rem;
+    font-family:var(--f-wide);
+    text-transform:uppercase;letter-spacing:.02em;
     border:2px solid var(--carbon);border-radius:2px;
     transition:transform .2s ease, background .2s ease;
   }
@@ -169,7 +189,7 @@
     gap:24px;flex-wrap:wrap;
   }
   .hero-sub p{
-    font-size:1.05rem;max-width:440px;font-weight:500;
+    font-size:.98rem;max-width:460px;font-weight:450;line-height:1.5;
     color:var(--carbon);
   }
   .hero-mascot{
@@ -199,9 +219,9 @@
     animation:scrollLeft 22s linear infinite;
   }
   .marquee-track span{
-    font-family:'League Spartan',sans-serif;
-    font-weight:800;text-transform:uppercase;
-    font-size:1.5rem;color:var(--cream);
+    font-family:var(--f-display);
+    font-weight:700;text-transform:uppercase;
+    font-size:1.55rem;letter-spacing:.02em;color:var(--cream);
     padding:0 28px;white-space:nowrap;
     display:flex;align-items:center;gap:28px;
   }
@@ -492,8 +512,8 @@
   }
   .stat-number{
     display:block;
-    font-family:'League Spartan',sans-serif;
-    font-weight:900;
+    font-family:var(--f-wide);
+    font-weight:800;letter-spacing:-.01em;
     font-size:clamp(2.4rem,5.5vw,3.8rem);
     line-height:1;
     color:var(--cream);
@@ -604,14 +624,16 @@
   .btn-primary{
     background:var(--red);color:var(--cream);
     padding:18px 40px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.04em;font-size:.95rem;border-radius:2px;
+    font-family:var(--f-wide);
+    letter-spacing:.02em;font-size:.9rem;border-radius:2px;
     border:2px solid var(--red);
     transition:transform .2s ease, background .2s ease;
   }
   .btn-primary:hover{transform:translate(-3px,-3px);background:#a11215;}
   .btn-ghost{
     padding:18px 40px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.04em;font-size:.95rem;border-radius:2px;
+    font-family:var(--f-wide);
+    letter-spacing:.02em;font-size:.9rem;border-radius:2px;
     border:2px solid var(--cream);color:var(--cream);
     transition:transform .2s ease, background .2s ease, color .2s ease;
   }
@@ -753,8 +775,8 @@
   .roto-toast{
     position:fixed;left:50%;bottom:28px;transform:translate(-50%,120%);
     background:var(--carbon);color:var(--cream);
-    font-family:'League Spartan',sans-serif;font-weight:800;text-transform:uppercase;
-    letter-spacing:.02em;font-size:1rem;padding:12px 20px;border:2px solid var(--red);
+    font-family:var(--f-display);font-weight:700;text-transform:uppercase;
+    letter-spacing:.03em;font-size:1.05rem;padding:12px 20px;border:2px solid var(--red);
     z-index:9999;transition:transform .5s cubic-bezier(.2,.9,.2,1.1);pointer-events:none;
   }
   .roto-toast.show{transform:translate(-50%,0);}
@@ -790,7 +812,7 @@
   .deck .work-card.dragging{transition:none;cursor:grabbing;}
   .deck .work-card.leaving{transition:transform .5s cubic-bezier(.4,0,.8,.4), opacity .4s ease;}
   .deck-hint{
-    text-align:center;margin-top:20px;font-size:.8rem;font-weight:600;
+    text-align:center;margin-top:20px;font-size:.78rem;font-weight:500;font-family:var(--f-mono);
     color:var(--carbon-soft);letter-spacing:.06em;
   }
   .deck-nav{display:flex;justify-content:center;gap:12px;margin-top:14px;}
