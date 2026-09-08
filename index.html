@@ -829,32 +829,6 @@
     .services-cam-deco{width:48px;top:20px;}
   }
 
-  /* ---------- MODO ROTO ---------- */
-  .hero-mascot{cursor:pointer;user-select:none;-webkit-user-drag:none;}
-  body.roto-armed [data-shard]{
-    transition:transform 1.1s cubic-bezier(.2,.7,.2,1), filter .9s ease, opacity .9s ease;
-    will-change:transform;
-  }
-  body.roto-shake [data-shard]{animation:rotoShake .08s linear infinite;}
-  @keyframes rotoShake{
-    0%{transform:translate(0,0)}25%{transform:translate(-3px,2px)}
-    50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,-3px)}100%{transform:translate(2px,3px)}
-  }
-  body.roto-fall [data-shard]{filter:grayscale(1) contrast(1.3);}
-  body.roto-fall .hero::before{background:var(--carbon);}
-  .roto-toast{
-    position:fixed;left:50%;bottom:28px;transform:translate(-50%,220%);opacity:0;
-    background:var(--carbon);color:var(--cream);
-    font-family:var(--f-display);font-weight:700;text-transform:uppercase;
-    letter-spacing:.03em;font-size:1.05rem;padding:12px 20px;border:2px solid var(--red);
-    z-index:9999;transition:transform .5s cubic-bezier(.2,.9,.2,1.1), opacity .3s ease;pointer-events:none;
-  }
-  .roto-toast.show{transform:translate(-50%,0);opacity:1;}
-  @media (prefers-reduced-motion:reduce){
-    body.roto-shake [data-shard]{animation:none;}
-    body.roto-armed [data-shard]{transition:none;}
-  }
-
   /* ---------- PORTAFOLIO: MAZO DE CARTAS ---------- */
   .deck{
     position:relative;
@@ -995,7 +969,7 @@
 </head>
 <body>
 
-<header data-shard>
+<header>
   <div class="nav-inner">
     <a href="#" class="nav-logo" aria-label="Desruptivo"><img src="img/logo-desruptivo.png" alt="Desruptivo"></a>
     <nav class="links">
@@ -1030,7 +1004,7 @@
       <li><span class="disc-short">Dir.</span><span class="disc-long">Dirección</span> creativa</li>
     </ul>
   </div>
-  <img src="img/mascota-desruptivo.png" alt="Mascota Desruptivo" class="hero-mascot" id="mascot" title="¿Y si lo rompes?">
+  <img src="img/mascota-desruptivo.png" alt="Mascota Desruptivo" class="hero-mascot" id="mascot">
   <div class="scroll-cue" aria-hidden="true"><span class="line"></span>Desliza</div>
   <div class="marquee">
     <div class="marquee-track">
@@ -1290,55 +1264,6 @@
       card.style.boxShadow = '';
     });
   });
-
-  // =========================================================
-  // 2) MODO ROTO: 3 clics a la mascota o escribir "roto"
-  // =========================================================
-  (function modoRoto(){
-    // Marcar fragmentos: cada bloque directo de sección y footer
-    document.querySelectorAll('section > *, footer > *, section .wrap > *').forEach(el=>{
-      if(!el.matches('canvas')) el.setAttribute('data-shard','');
-    });
-    const shards = ()=>Array.from(document.querySelectorAll('[data-shard]'));
-    const toast = document.createElement('div'); toast.className='roto-toast'; document.body.appendChild(toast);
-    let busy=false;
-
-    function say(msg, ms=1800){ toast.textContent=msg; toast.classList.add('show'); clearTimeout(say._t); say._t=setTimeout(()=>toast.classList.remove('show'), ms); }
-
-    function romper(){
-      if(busy) return; busy=true;
-      const body=document.body, list=shards();
-      say('Todo se rompe.');
-      body.classList.add('roto-armed','roto-shake');
-      setTimeout(()=>{
-        body.classList.remove('roto-shake'); body.classList.add('roto-fall');
-        list.forEach(el=>{
-          const r=el.getBoundingClientRect();
-          const dir = r.left + r.width/2 < innerWidth/2 ? -1 : 1;
-          const tx = dir*(40+Math.random()*260), ty = 140+Math.random()*560, rot=(Math.random()-.5)*70;
-          el.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${.7+Math.random()*.25})`;
-          el.style.opacity= .25+Math.random()*.4;
-        });
-      }, 700);
-      setTimeout(()=>{
-        say('…y se rearma.');
-        list.forEach((el,i)=>{ el.style.transitionDelay=(i%9)*35+'ms'; el.style.transform=''; el.style.opacity=''; });
-        document.body.classList.remove('roto-fall');
-      }, 2300);
-      setTimeout(()=>{
-        list.forEach(el=>{ el.style.transitionDelay=''; });
-        document.body.classList.remove('roto-armed');
-        busy=false;
-      }, 3900);
-    }
-
-    // Disparador 1: 3 clics rápidos a la mascota
-    const mascot=document.getElementById('mascot'); let clicks=0, ct;
-    mascot && mascot.addEventListener('click', ()=>{ clicks++; clearTimeout(ct); ct=setTimeout(()=>clicks=0,900); if(clicks===2) say('Uno más…',900); if(clicks>=3){ clicks=0; romper(); } });
-    // Disparador 2: escribir "roto"
-    let buf=''; addEventListener('keydown', e=>{ if(e.target.matches('input,textarea')) return; buf=(buf+e.key.toLowerCase()).slice(-4); if(buf==='roto') romper(); });
-    window.desruptivo = { romper };
-  })();
 
   // =========================================================
   // 3) PORTAFOLIO: mazo de cartas 3D (arrastrar / clic / teclado)
