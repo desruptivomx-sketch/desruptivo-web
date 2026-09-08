@@ -121,6 +121,9 @@
   .wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
 
   :focus-visible{outline:3px solid var(--red);outline-offset:3px;}
+  @media (hover:none) and (pointer:coarse){
+    :focus-visible{outline:none;}
+  }
 
   /* ---------- NAV ---------- */
   header{
