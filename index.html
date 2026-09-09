@@ -823,6 +823,11 @@
   .gallery-grid .gallery-item:nth-child(4){transition-delay:.22s;}
   .gallery-grid .gallery-item:nth-child(5){transition-delay:.28s;}
   .gallery-grid .gallery-item:nth-child(6){transition-delay:.34s;}
+  .gallery-grid .gallery-item:nth-child(7){transition-delay:.4s;}
+  .gallery-grid .gallery-item:nth-child(8){transition-delay:.46s;}
+  .gallery-grid .gallery-item:nth-child(9){transition-delay:.52s;}
+  .gallery-grid .gallery-item:nth-child(10){transition-delay:.58s;}
+  .gallery-grid .gallery-item:nth-child(11){transition-delay:.64s;}
 
   @media (max-width:900px){
     .hero-star-deco{width:64px;top:100px;left:auto;right:22px;}
@@ -938,6 +943,9 @@
   .gi-wide{aspect-ratio:4/3;}
   .gi-square{aspect-ratio:1/1;}
   .gi-portrait{aspect-ratio:2/3;}
+  /* proporciones reales de las piezas: nada se recorta */
+  .gi-post{aspect-ratio:4/5;}    /* post de Instagram */
+  .gi-story{aspect-ratio:9/16;}  /* story / reel */
   .gallery-item img{
     width:100%;height:100%;object-fit:cover;display:block;
     transition:transform .5s ease;
@@ -962,8 +970,54 @@
     .deco-eyes{width:56px;top:40px;}
     .deco-cam{width:38px;bottom:30px;}
   }
-  @media (max-width:560px){
-    .gallery-grid{column-count:1;}
+  /* ---------- GALERIA EN CELULAR: tira horizontal deslizable ----------
+     Las piezas son posts y stories: se navegan con swipe, como en
+     Instagram, y todas comparten altura conservando su proporcion real.
+     Evita ~5000px de scroll vertical con 11 piezas apiladas.          */
+  .gallery-hint,.gallery-progress{display:none;}
+  @media (max-width:640px){
+    .gallery-grid{
+      --gh:clamp(330px,52vh,430px);
+      column-count:auto;
+      display:flex;gap:12px;
+      height:var(--gh);
+      overflow-x:auto;overflow-y:hidden;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      /* se sale del .wrap para tocar ambos bordes de la pantalla */
+      margin-inline:-20px;
+      padding:2px 20px 4px;
+    }
+    .gallery-grid::-webkit-scrollbar{display:none;}
+    .gallery-item{
+      flex:0 0 auto;
+      height:var(--gh);
+      margin-bottom:0;
+      scroll-snap-align:center;
+    }
+    /* el ancho lo dicta la proporcion de cada pieza, no un recorte */
+    .gi-story{width:calc(var(--gh)*9/16);}
+    .gi-post{width:calc(var(--gh)*4/5);}
+    .gi-tall{width:calc(var(--gh)*3/4);}
+    .gi-portrait{width:calc(var(--gh)*2/3);}
+    .gi-square{width:var(--gh);}
+    .gi-wide{width:calc(var(--gh)*4/3);}
+    .gallery-hint{
+      display:flex;align-items:center;gap:8px;
+      margin-top:14px;
+      font-family:var(--f-mono);font-size:.68rem;font-weight:600;
+      letter-spacing:.14em;text-transform:uppercase;
+      color:var(--carbon-soft);
+    }
+    .gallery-progress{
+      display:block;margin-top:10px;
+      height:3px;background:var(--grey);border:1px solid var(--carbon);
+    }
+    .gallery-progress span{
+      display:block;height:100%;width:0;background:var(--red);
+      transition:width .1s linear;
+    }
   }
 </style>
 </head>
@@ -1127,37 +1181,42 @@
       <h2>Un vistazo a lo<br>que hemos hecho.</h2>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-item gi-wide reveal">
-        <img src="diseno-grafico/grafico-1.jpg" alt="Proyecto de diseño gráfico 1" loading="lazy"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gi-fallback"><span class="gi-plus">+</span><p>Sube tu primer diseño aquí</p></div>
-      </div>
       <div class="gallery-item gi-tall reveal">
-        <img src="diseno-grafico/grafico-2.jpg" alt="Proyecto de diseño gráfico 2" loading="lazy"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gi-fallback"><span class="gi-plus">+</span><p>Sube tu diseño aquí</p></div>
+        <img src="diseno-grafico/pajaro-en-piedra.jpg" alt="Pájaro en Piedra — campaña inmobiliaria para Archipiélago" loading="lazy" decoding="async">
       </div>
       <div class="gallery-item gi-square reveal">
-        <img src="diseno-grafico/grafico-3.jpg" alt="Proyecto de diseño gráfico 3" loading="lazy"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gi-fallback"><span class="gi-plus">+</span><p>Sube tu diseño aquí</p></div>
+        <img src="diseno-grafico/mcdonalds-semaforo.jpg" alt="McDonald's México — post de papas y semáforo" loading="lazy" decoding="async">
       </div>
-      <div class="gallery-item gi-portrait reveal">
-        <img src="diseno-grafico/grafico-4.jpg" alt="Proyecto de diseño gráfico 4" loading="lazy"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gi-fallback"><span class="gi-plus">+</span><p>Sube tu diseño aquí</p></div>
+      <div class="gallery-item gi-story reveal">
+        <img src="diseno-grafico/bajel-chef-story.jpg" alt="Bajel — story de cena con el chef invitado Mario Papa" loading="lazy" decoding="async">
       </div>
-      <div class="gallery-item gi-square reveal">
-        <img src="diseno-grafico/grafico-5.jpg" alt="Proyecto de diseño gráfico 5" loading="lazy"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gi-fallback"><span class="gi-plus">+</span><p>Sube tu diseño aquí</p></div>
+      <div class="gallery-item gi-post reveal">
+        <img src="diseno-grafico/boro-tipografia.jpg" alt="Boro — cartel tipográfico de helado" loading="lazy" decoding="async">
       </div>
-      <div class="gallery-item gi-wide reveal">
-        <img src="diseno-grafico/grafico-6.jpg" alt="Proyecto de diseño gráfico 6" loading="lazy"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gi-fallback"><span class="gi-plus">+</span><p>Sube tu diseño aquí</p></div>
+      <div class="gallery-item gi-post reveal">
+        <img src="diseno-grafico/citron-grupo-gia.jpg" alt="Citrón de Grupo Gia — post de inversión en limón persa" loading="lazy" decoding="async">
+      </div>
+      <div class="gallery-item gi-story reveal">
+        <img src="diseno-grafico/mcdonalds-primavera-story.jpg" alt="McDonald's México — story de primavera con cono" loading="lazy" decoding="async">
+      </div>
+      <div class="gallery-item gi-post reveal">
+        <img src="diseno-grafico/levels-murad.jpg" alt="Levels Dermatology — post del Murad Clarifying Booster" loading="lazy" decoding="async">
+      </div>
+      <div class="gallery-item gi-post reveal">
+        <img src="diseno-grafico/cosmicos-goat-milk.jpg" alt="Cósmicos Pet Bakery — post de Goat Milk Bears" loading="lazy" decoding="async">
+      </div>
+      <div class="gallery-item gi-story reveal">
+        <img src="diseno-grafico/salmon-descuento-story.jpg" alt="Story de descuento de salmón con código promocional" loading="lazy" decoding="async">
+      </div>
+      <div class="gallery-item gi-post reveal">
+        <img src="diseno-grafico/picking-express-embalaje.jpg" alt="Picking Express — post de embalaje personalizado" loading="lazy" decoding="async">
+      </div>
+      <div class="gallery-item gi-post reveal">
+        <img src="diseno-grafico/boro-conos.jpg" alt="Boro — post de dos conos de helado" loading="lazy" decoding="async">
       </div>
     </div>
+    <div class="gallery-progress" aria-hidden="true"><span></span></div>
+    <p class="gallery-hint">Desliza para ver más &rarr;</p>
   </div>
 </section>
 
@@ -1341,6 +1400,20 @@
       if(e.isIntersecting){ band.classList.add('in'); io.disconnect(); }
     },{threshold:.4});
     io.observe(band);
+  })();
+
+  // Galeria en celular: barra de progreso de la tira horizontal
+  (function galleryStrip(){
+    const g=document.querySelector('.gallery-grid');
+    const bar=document.querySelector('.gallery-progress span');
+    if(!g||!bar) return;
+    const sync=()=>{
+      const max=g.scrollWidth-g.clientWidth;
+      bar.style.width = max>2 ? (g.scrollLeft/max*100)+'%' : '0%';
+    };
+    g.addEventListener('scroll', sync, {passive:true});
+    addEventListener('resize', sync);
+    sync();
   })();
 
   // Cabecera: transparente sobre el hero, sólida al bajar
