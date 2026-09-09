@@ -668,7 +668,7 @@
   /* ---------- WORK ---------- */
   .work{background:var(--cream);}
   .work-card{
-    aspect-ratio:4/5;
+    aspect-ratio:9/16;
     border:2px dashed var(--carbon);
     position:relative;overflow:hidden;
     transition:border-style .2s ease;
@@ -837,8 +837,13 @@
   /* ---------- PORTAFOLIO: MAZO DE CARTAS ---------- */
   .deck{
     position:relative;
-    height:min(560px, 78vw);
-    max-width:420px;
+    /* 9:16 como reel/story. El alto manda y el ancho se deriva, para que
+       en pantalla angosta la carta crezca en vez de achatarse: el
+       min(560px,78vw) anterior daba 292px de alto en un movil de 375. */
+    --dh:min(780px, 82vh, calc(88vw*16/9));
+    height:var(--dh);
+    width:calc(var(--dh)*9/16);
+    max-width:100%;
     margin:0 auto;
     perspective:1400px;
     touch-action:pan-y;
