@@ -970,24 +970,25 @@
     .deco-eyes{width:56px;top:40px;}
     .deco-cam{width:38px;bottom:30px;}
   }
-  /* ---------- GALERIA EN CELULAR: tira horizontal deslizable ----------
+  /* ---------- GALERIA EN CELULAR: coverflow 3D deslizable ----------
      Las piezas son posts y stories: se navegan con swipe, como en
-     Instagram, y todas comparten altura conservando su proporcion real.
-     Evita ~5000px de scroll vertical con 11 piezas apiladas.          */
+     Instagram. La del centro va al frente; las vecinas se recuestan en
+     perspectiva. Cada una conserva su proporcion real (nada se recorta)
+     y se evitan ~5000px de scroll vertical con 11 piezas apiladas.   */
   .gallery-hint,.gallery-progress{display:none;}
   @media (max-width:640px){
     .gallery-grid{
-      --gh:clamp(330px,52vh,430px);
+      --gh:clamp(300px,46vh,380px);
       column-count:auto;
-      display:flex;gap:12px;
-      height:var(--gh);
+      display:flex;align-items:center;gap:6px;
       overflow-x:auto;overflow-y:hidden;
       scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:none;
-      /* se sale del .wrap para tocar ambos bordes de la pantalla */
+      /* se sale del .wrap y deja aire para que la 1a y la ultima
+         alcancen el centro, y para que quepan sombra y escala */
       margin-inline:-20px;
-      padding:2px 20px 4px;
+      padding:26px calc(50% - var(--gh)*0.4);
     }
     .gallery-grid::-webkit-scrollbar{display:none;}
     .gallery-item{
@@ -995,7 +996,12 @@
       height:var(--gh);
       margin-bottom:0;
       scroll-snap-align:center;
+      transform-style:preserve-3d;
+      will-change:transform,opacity;
+      box-shadow:0 16px 34px rgba(24,4,4,.34);
     }
+    /* el JS maneja transform y opacidad aqui: el reveal estorbaria */
+    .gallery-item.reveal{opacity:1;transform:none;}
     /* el ancho lo dicta la proporcion de cada pieza, no un recorte */
     .gi-story{width:calc(var(--gh)*9/16);}
     .gi-post{width:calc(var(--gh)*4/5);}
@@ -1004,20 +1010,17 @@
     .gi-square{width:var(--gh);}
     .gi-wide{width:calc(var(--gh)*4/3);}
     .gallery-hint{
-      display:flex;align-items:center;gap:8px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
       margin-top:14px;
       font-family:var(--f-mono);font-size:.68rem;font-weight:600;
       letter-spacing:.14em;text-transform:uppercase;
       color:var(--carbon-soft);
     }
     .gallery-progress{
-      display:block;margin-top:10px;
+      display:block;margin-top:12px;
       height:3px;background:var(--grey);border:1px solid var(--carbon);
     }
-    .gallery-progress span{
-      display:block;height:100%;width:0;background:var(--red);
-      transition:width .1s linear;
-    }
+    .gallery-progress span{display:block;height:100%;width:0;background:var(--red);}
   }
 </style>
 </head>
@@ -1402,18 +1405,54 @@
     io.observe(band);
   })();
 
-  // Galeria en celular: barra de progreso de la tira horizontal
-  (function galleryStrip(){
+  // Galeria en celular: coverflow 3D. Cada pieza se recuesta segun su
+  // distancia al centro de la tira. En escritorio se limpia todo para
+  // no estorbar al masonry.
+  (function galleryCoverflow(){
     const g=document.querySelector('.gallery-grid');
     const bar=document.querySelector('.gallery-progress span');
-    if(!g||!bar) return;
-    const sync=()=>{
-      const max=g.scrollWidth-g.clientWidth;
-      bar.style.width = max>2 ? (g.scrollLeft/max*100)+'%' : '0%';
-    };
-    g.addEventListener('scroll', sync, {passive:true});
-    addEventListener('resize', sync);
-    sync();
+    if(!g) return;
+    const items=Array.from(g.querySelectorAll('.gallery-item'));
+    const suave=matchMedia('(prefers-reduced-motion:reduce)');
+    const movil=matchMedia('(max-width:640px)');
+    let raf=null, sucio=false;
+
+    function limpiar(){
+      if(!sucio) return;
+      items.forEach(it=>{ it.style.transform=''; it.style.opacity=''; it.style.zIndex=''; });
+      sucio=false;
+    }
+    function pintar(){
+      raf=null;
+      if(!movil.matches || suave.matches){ limpiar(); return; }
+      const gr=g.getBoundingClientRect();
+      const centro=gr.left+gr.width/2;
+      items.forEach(it=>{
+        const r=it.getBoundingClientRect();
+        const d=(r.left+r.width/2-centro)/gr.width;        // 0 = centrada
+        const k=Math.min(Math.abs(d)/0.7,1);               // 0..1
+        const lado=Math.sign(d);
+        it.style.transform='perspective(1100px) translateZ('+(-150*k).toFixed(1)+'px)'
+          +' rotateY('+(-26*lado*k).toFixed(1)+'deg)'
+          +' scale('+(1-0.12*k).toFixed(3)+')';
+        it.style.opacity=(1-0.42*k).toFixed(3);
+        it.style.zIndex=String(60-Math.round(k*50));
+        sucio=true;
+      });
+      if(bar){
+        const max=g.scrollWidth-g.clientWidth;
+        bar.style.width = max>2 ? (g.scrollLeft/max*100).toFixed(1)+'%' : '0%';
+      }
+    }
+    const pedir=()=>{ if(!raf) raf=requestAnimationFrame(pintar); };
+    g.addEventListener('scroll', pedir, {passive:true});
+    addEventListener('resize', pedir);
+    addEventListener('orientationchange', pedir);
+    addEventListener('load', pedir);
+    movil.addEventListener?.('change', pedir);
+    // las imagenes son lazy: al cargar cambian el layout de la tira
+    items.forEach(it=>{ const im=it.querySelector('img'); if(im) im.addEventListener('load', pedir); });
+    pedir();
   })();
 
   // Cabecera: transparente sobre el hero, sólida al bajar
