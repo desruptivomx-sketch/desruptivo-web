@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#cf1417">
+<meta name="robots" content="noindex">
+<title>Página no encontrada — DESRUPTIVO</title>
+<link rel="icon" type="image/png" href="/desruptivo-web/img/mascota-desruptivo.png">
+<style>
+  @font-face{font-family:'Squid Boy';src:url('/desruptivo-web/fonts/SquidBoy-Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+  @font-face{font-family:'Monoglyphic';src:url('/desruptivo-web/fonts/Monoglyphic-VF.woff2') format('woff2');font-weight:100 900;font-display:swap;}
+  :root{
+    --carbon:#27272a;
+    --cream:#e8e7df;
+    --red-ink:#cf1417;
+    --paper:#efeade;
+    color-scheme:light;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    min-height:100svh;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:26px;
+    padding:40px 24px;
+    text-align:center;
+    background:var(--red-ink);
+    color:var(--paper);
+    font-family:'Monoglyphic',ui-monospace,monospace;
+    font-weight:450;
+    position:relative;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .print{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      url('/desruptivo-web/img/textura-rayones.png') center/cover no-repeat,
+      url('/desruptivo-web/img/textura-grano.png') 0 0/220px 220px repeat;
+    background-blend-mode:overlay, overlay;
+    opacity:.42;
+    mix-blend-mode:multiply;
+  }
+  .inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:22px;}
+  .code{
+    font-family:'Squid Boy',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    line-height:.9;
+    font-size:clamp(5.5rem,22vw,13rem);
+    color:var(--paper);
+  }
+  .eyebrow{
+    font-weight:600;font-size:.74rem;
+    letter-spacing:.14em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:.5em;
+  }
+  .eyebrow::before{
+    content:"";width:.5em;height:.5em;
+    background:var(--carbon);display:inline-block;
+    border-radius:1px;transform:rotate(45deg);
+  }
+  p{max-width:34ch;font-size:1rem;line-height:1.5;}
+  .home{
+    display:inline-block;
+    margin-top:6px;
+    padding:13px 34px;
+    background:var(--paper);
+    color:var(--carbon);
+    font-weight:700;
+    font-size:.82rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    border:2px solid var(--carbon);
+    box-shadow:5px 5px 0 var(--carbon);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .home:hover,.home:focus-visible{
+    transform:translate(3px,3px);
+    box-shadow:2px 2px 0 var(--carbon);
+  }
+  .mascot{width:min(140px,32vw);}
+  @media (prefers-reduced-motion:reduce){
+    .home{transition:none;}
+  }
+</style>
+</head>
+<body>
+  <div class="print" aria-hidden="true"></div>
+  <div class="inner">
+    <span class="eyebrow">Error 404</span>
+    <div class="code">Perdido</div>
+    <p>Esta página no existe, se movió, o nunca la hicimos. Regresa al inicio y sigue el recorrido.</p>
+    <img src="/desruptivo-web/img/mascota-desruptivo.png" alt="" class="mascot">
+    <a href="/desruptivo-web/" class="home">Volver al inicio</a>
+  </div>
+</body>
+</html>

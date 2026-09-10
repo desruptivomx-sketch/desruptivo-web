@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://desruptivomx-sketch.github.io/desruptivo-web/sitemap.xml
