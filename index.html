@@ -4,8 +4,70 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light only">
-<meta name="theme-color" content="#e8e7df">
+<meta name="theme-color" content="#cf1417">
 <title>DESRUPTIVO — Agencia Creativa Integral</title>
+<meta name="description" content="Agencia creativa integral en Mérida, Yucatán. Branding, marketing, desarrollo web y video bajo una sola dirección creativa. Hacemos ruido con intención.">
+<link rel="canonical" href="https://desruptivomx-sketch.github.io/desruptivo-web/">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="img/mascota-desruptivo.png">
+<link rel="apple-touch-icon" href="img/mascota-desruptivo.png">
+
+<!-- Open Graph / vista previa al compartir el enlace -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Desruptivo">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://desruptivomx-sketch.github.io/desruptivo-web/">
+<meta property="og:title" content="DESRUPTIVO — Agencia Creativa Integral">
+<meta property="og:description" content="Branding, marketing, desarrollo web y video bajo una sola dirección creativa. Hacemos ruido con intención.">
+<meta property="og:image" content="https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logotipo de Desruptivo en crema sobre fondo rojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DESRUPTIVO — Agencia Creativa Integral">
+<meta name="twitter:description" content="Branding, marketing, desarrollo web y video bajo una sola dirección creativa.">
+<meta name="twitter:image" content="https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg">
+
+<!-- Tipografías críticas del hero y la navegación -->
+<link rel="preload" href="fonts/SquidBoy-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Monoglyphic-VF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/CasualHuman-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="img/logo-desruptivo.png" as="image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Desruptivo",
+  "alternateName": "Desruptivo Agencia Creativa Integral",
+  "description": "Agencia creativa integral: branding, marketing, ingeniería digital y multimedia bajo una sola dirección creativa.",
+  "url": "https://desruptivomx-sketch.github.io/desruptivo-web/",
+  "logo": "https://desruptivomx-sketch.github.io/desruptivo-web/img/logo-desruptivo.png",
+  "image": "https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg",
+  "telephone": "+52-999-906-4262",
+  "email": "desruptivo@outlook.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mérida",
+    "addressRegion": "Yucatán",
+    "addressCountry": "MX"
+  },
+  "sameAs": ["https://instagram.com/desruptivomx"],
+  "areaServed": { "@type": "Country", "name": "México" },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Servicios",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Marketing y pauta digital" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ingeniería y desarrollo web" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Producción multimedia y video" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dirección creativa y branding" } }
+    ]
+  }
+}
+</script>
 <style>
   @font-face{font-family:'Squid Boy';src:url('fonts/SquidBoy.woff2') format('woff2');font-weight:400;font-display:swap;}
   @font-face{font-family:'Squid Boy';src:url('fonts/SquidBoy-Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
@@ -63,6 +125,13 @@
 
   a{color:inherit;text-decoration:none;}
   img{display:block;max-width:100%;}
+
+  /* Texto que leen buscadores y lectores de pantalla, invisible en pantalla */
+  .sr-only{
+    position:absolute;width:1px;height:1px;
+    padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
 
   .eyebrow{
     font-family:var(--f-mono);
@@ -760,6 +829,17 @@
   }
   .contact-meta .col span{display:block;color:var(--grey);font-size:.72rem;
     text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;font-weight:700;}
+  .contact-meta .col a{
+    display:inline-block;
+    padding:2px 0;
+    border-bottom:1.5px solid transparent;
+    transition:border-color .2s ease,color .2s ease;
+  }
+  .contact-meta .col a:hover,
+  .contact-meta .col a:focus-visible{
+    color:var(--red);
+    border-bottom-color:var(--red);
+  }
 
   /* ---------- FOOTER ---------- */
   footer{background:var(--carbon);border-top:2px solid var(--carbon-soft);padding:26px 0;}
@@ -1058,7 +1138,8 @@
       <span class="eyebrow eyebrow-hero"><span class="eyebrow-text" data-text="Agencia creativa integral">Agencia creativa integral</span></span>
     </div>
     <h1 class="hero-word">
-      <span class="hero-word-ink" role="img" aria-label="Desruptivo"></span>
+      <span class="sr-only">Desruptivo — agencia creativa integral en Mérida, Yucatán</span>
+      <span class="hero-word-ink" aria-hidden="true"></span>
     </h1>
     <div class="hero-sub">
       <p>Branding, digital, video y marketing bajo una sola dirección creativa. Hacemos ruido con intención.</p>
@@ -1313,9 +1394,9 @@
       <a href="https://instagram.com/desruptivomx" class="btn-ghost" target="_blank" rel="noopener">@desruptivomx</a>
     </div>
     <div class="contact-meta">
-      <div class="col"><span>Correo</span>desruptivo@outlook.com</div>
-      <div class="col"><span>Teléfono</span>+52 999 906 4262</div>
-      <div class="col"><span>Instagram</span>@desruptivomx</div>
+      <div class="col"><span>Correo</span><a href="mailto:desruptivo@outlook.com?subject=Proyecto%20nuevo%20%E2%80%94%20Desruptivo">desruptivo@outlook.com</a></div>
+      <div class="col"><span>Teléfono</span><a href="tel:+529999064262">+52 999 906 4262</a></div>
+      <div class="col"><span>Instagram</span><a href="https://instagram.com/desruptivomx" target="_blank" rel="noopener">@desruptivomx</a></div>
     </div>
   </div>
 </section>
