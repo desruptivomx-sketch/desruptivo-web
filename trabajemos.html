@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#8fb258">
+<title>Trabajemos — DESRUPTIVO</title>
+<meta name="description" content="Cómo arrancamos un proyecto, qué necesitamos de ti y cómo contactarnos. Agencia creativa integral en Mérida, Yucatán.">
+<link rel="canonical" href="https://desruptivomx-sketch.github.io/desruptivo-web/trabajemos.html">
+
+<link rel="icon" type="image/png" href="img/mascota-desruptivo.png">
+<link rel="apple-touch-icon" href="img/mascota-desruptivo.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Desruptivo">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://desruptivomx-sketch.github.io/desruptivo-web/trabajemos.html">
+<meta property="og:title" content="Trabajemos — DESRUPTIVO">
+<meta property="og:description" content="Cinco pasos de la primera llamada a la entrega. Cuéntanos qué traes en mente.">
+<meta property="og:image" content="https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg">
+
+<link rel="preload" href="fonts/SquidBoy-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Monoglyphic-VF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/desruptivo.css">
+<style>
+  /* ---------- PROCESO: BOLETOS PERFORADOS ---------- */
+  .proceso{background:var(--cream);}
+  .pasos{
+    position:relative;
+    display:grid;gap:18px;
+    max-width:920px;
+  }
+  .paso{
+    position:relative;
+    background:var(--paper);
+    border:2px solid var(--carbon);
+    border-radius:3px;
+    padding:26px 30px 26px 92px;
+    box-shadow:6px 6px 0 var(--carbon);
+  }
+  /* Talón perforado del boleto */
+  .paso::before{
+    content:"";
+    position:absolute;left:64px;top:10px;bottom:10px;
+    border-left:2px dashed var(--grey);
+  }
+  .paso .num{
+    position:absolute;left:0;top:0;bottom:0;width:64px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--f-display);font-weight:700;
+    font-size:2rem;line-height:1;
+    color:var(--red);
+  }
+  .paso h3{font-size:clamp(1.15rem,2.2vw,1.5rem);margin-bottom:10px;}
+  .paso p{font-size:.95rem;line-height:1.6;max-width:58ch;}
+  .paso .dura{
+    display:inline-block;margin-top:14px;
+    font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:700;color:var(--carbon-soft);
+    border:1.5px solid var(--grey);border-radius:2px;
+    padding:4px 10px;
+  }
+
+  /* ---------- QUÉ NECESITAMOS ---------- */
+  .insumos{background:var(--carbon);color:var(--cream);}
+  .insumos .eyebrow::before{background:var(--green);}
+  .insumos-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:2px;background:var(--carbon-soft);
+    border:2px solid var(--carbon-soft);
+  }
+  .insumo{background:var(--carbon);padding:28px 26px;}
+  .insumo h3{font-size:1.05rem;margin-bottom:9px;color:var(--green);}
+  .insumo p{font-size:.9rem;line-height:1.55;color:var(--grey);}
+
+  /* ---------- FORMULARIO ---------- */
+  .arranque{
+    background:var(--green);
+    background-image:repeating-linear-gradient(45deg, transparent 0 10px, rgba(39,39,42,.06) 10px 11px);
+    color:var(--carbon);
+  }
+  .arranque .eyebrow::before{background:var(--carbon);}
+  .form-shell{
+    max-width:720px;
+    background:var(--paper);
+    border:2px solid var(--carbon);
+    border-radius:3px;
+    box-shadow:9px 9px 0 var(--carbon);
+    padding:clamp(26px,4vw,44px);
+  }
+  .form-grid{display:grid;gap:20px;}
+  .field label{
+    display:block;
+    font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:700;margin-bottom:7px;color:var(--carbon-soft);
+  }
+  .field input,.field select,.field textarea{
+    width:100%;
+    font-family:var(--f-mono);font-size:.95rem;font-weight:450;
+    color:var(--carbon);
+    background:var(--cream);
+    border:2px solid var(--carbon);
+    border-radius:2px;
+    padding:12px 14px;
+  }
+  .field textarea{min-height:112px;resize:vertical;}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:3px solid var(--red);outline-offset:1px;
+  }
+  .field .hint{display:block;margin-top:6px;font-size:.75rem;color:var(--carbon-soft);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .form-foot{margin-top:26px;}
+  .form-note{margin-top:16px;font-size:.78rem;line-height:1.5;color:var(--carbon-soft);max-width:52ch;}
+  .form-error{
+    display:none;margin-bottom:18px;
+    background:var(--red);color:var(--cream);
+    border-radius:2px;padding:11px 14px;
+    font-size:.85rem;font-weight:600;
+  }
+  .form-error.visible{display:block;}
+
+  /* ---------- CONTACTO DIRECTO ---------- */
+  .directo{background:var(--carbon);color:var(--cream);}
+  .directo-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;
+    border-top:2px solid var(--carbon-soft);padding-top:34px;
+  }
+  .directo .col span{
+    display:block;color:var(--grey);font-size:.72rem;
+    text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px;font-weight:700;
+  }
+  .directo .col a,.directo .col p{
+    font-size:1rem;font-weight:500;
+    display:inline-block;padding:2px 0;
+    border-bottom:1.5px solid transparent;
+    transition:border-color .2s ease,color .2s ease;
+  }
+  .directo .col a:hover,.directo .col a:focus-visible{color:var(--red);border-bottom-color:var(--red);}
+
+  @media (max-width:560px){
+    .form-row{grid-template-columns:1fr;}
+    .paso{padding:22px 22px 22px 74px;box-shadow:4px 4px 0 var(--carbon);}
+    .paso::before{left:52px;}
+    .paso .num{width:52px;font-size:1.6rem;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Desruptivo — inicio"><img src="img/logo-desruptivo.png" alt="Desruptivo"></a>
+    <nav class="links">
+      <a href="nosotros.html">Nosotros</a>
+      <a href="esencia.html">Esencia</a>
+      <a href="index.html#servicios">Servicios</a>
+      <a href="index.html#diseno">Diseño</a>
+      <a href="index.html#trabajo">Trabajo</a>
+    </nav>
+    <a href="trabajemos.html" class="nav-cta" aria-current="page">Trabajemos</a>
+    <button class="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+<section class="page-hero page-hero--green">
+  <div class="page-hero-print" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="crumbs"><a href="index.html">Inicio</a> / Trabajemos</p>
+    <span class="eyebrow">Empecemos</span>
+    <h1>Cuéntanos qué traes en mente.</h1>
+    <p class="lede">Sin formularios eternos ni cotizaciones de veinte páginas. Una llamada de media hora suele bastar para saber si somos el equipo correcto para tu proyecto.</p>
+  </div>
+</section>
+
+<!--
+  ============================================================
+  OJO: EL PROCESO DE ABAJO ES UN BORRADOR
+  Lo escribí con una estructura estándar de agencia porque no
+  me diste tu proceso real. Revisa los pasos, los nombres y
+  sobre todo los tiempos ("48 horas", "2 a 3 días") antes de
+  darlo por bueno: son promesas que el cliente te va a cobrar.
+  ============================================================
+-->
+<section class="proceso">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cómo trabajamos</span>
+      <h2>De la primera llamada<br>a la entrega.</h2>
+    </div>
+    <div class="pasos">
+      <article class="paso reveal">
+        <span class="num" aria-hidden="true">1</span>
+        <h3>Llamada de arranque</h3>
+        <p>Nos cuentas qué necesitas, a quién le hablas y qué has intentado antes. Nosotros te decimos de frente si es un proyecto para nosotros o si te conviene otro equipo. Es gratis y no compromete a nada.</p>
+        <span class="dura">30 minutos</span>
+      </article>
+      <article class="paso reveal">
+        <span class="num" aria-hidden="true">2</span>
+        <h3>Propuesta y alcance</h3>
+        <p>Te mandamos por escrito qué entra, qué no entra, cuánto tarda y cuánto cuesta. Sin partidas vagas ni "extras por definir". Si algo cambia después, se vuelve a cotizar y lo sabes antes.</p>
+        <span class="dura">2 a 3 días</span>
+      </article>
+      <article class="paso reveal">
+        <span class="num" aria-hidden="true">3</span>
+        <h3>Dirección creativa</h3>
+        <p>Antes de ejecutar nada, definimos la idea que va a sostener todo el proyecto. Te presentamos una ruta, no cinco opciones para que elijas: si la defendemos es porque creemos que es la correcta, y la argumentamos.</p>
+      </article>
+      <article class="paso reveal">
+        <span class="num" aria-hidden="true">4</span>
+        <h3>Producción</h3>
+        <p>Diseño, código, cámara y edición según lo que pida el proyecto. Trabajas con el mismo equipo de principio a fin y tienes un solo punto de contacto, no un canal por disciplina.</p>
+      </article>
+      <article class="paso reveal">
+        <span class="num" aria-hidden="true">5</span>
+        <h3>Entrega y medición</h3>
+        <p>Recibes los archivos abiertos, no solo los finales, más el manual de uso de lo que aplique. Si el proyecto lleva pauta o sitio, te entregamos también los números y qué recomendamos ajustar.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="insumos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">De tu lado</span>
+      <h2>Qué necesitamos<br>para arrancar bien.</h2>
+    </div>
+    <div class="insumos-grid reveal">
+      <div class="insumo">
+        <h3>Quién decide</h3>
+        <p>Una persona con autoridad para aprobar. Los proyectos se atoran cuando la retroalimentación llega de cinco personas que no se pusieron de acuerdo entre ellas.</p>
+      </div>
+      <div class="insumo">
+        <h3>Un objetivo, no una lista de tareas</h3>
+        <p>"Quiero vender más membresías" nos sirve más que "quiero diez posts". Con el objetivo claro proponemos qué piezas de verdad lo mueven.</p>
+      </div>
+      <div class="insumo">
+        <h3>Lo que ya tienes</h3>
+        <p>Logotipos en vectores, fotos, accesos a redes, textos, resultados de campañas pasadas. Aunque esté desordenado: nos ahorra semanas.</p>
+      </div>
+      <div class="insumo">
+        <h3>Rango de presupuesto</h3>
+        <p>No para ajustarnos al techo, sino para proponerte el alcance correcto. Decirlo desde el principio evita dos rondas de propuestas inútiles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="arranque" id="formulario">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cuéntanos</span>
+      <h2>Arranca la conversación.</h2>
+    </div>
+    <div class="form-shell reveal">
+      <p class="form-error" id="formError" role="alert"></p>
+      <form id="briefForm" novalidate>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="field">
+              <label for="nombre">Tu nombre</label>
+              <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="negocio">Marca o negocio</label>
+              <input type="text" id="negocio" name="negocio" autocomplete="organization">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="necesito">Qué necesitas</label>
+              <select id="necesito" name="necesito">
+                <option value="Todavía no lo tengo claro">Todavía no lo tengo claro</option>
+                <option value="Dirección creativa y branding">Dirección creativa y branding</option>
+                <option value="Marketing y pauta">Marketing y pauta</option>
+                <option value="Sitio o producto digital">Sitio o producto digital</option>
+                <option value="Video y multimedia">Video y multimedia</option>
+                <option value="Varias cosas a la vez">Varias cosas a la vez</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="presupuesto">Rango de presupuesto</label>
+              <select id="presupuesto" name="presupuesto">
+                <option value="Prefiero platicarlo">Prefiero platicarlo</option>
+                <option value="Menos de 20 mil MXN">Menos de $20,000 MXN</option>
+                <option value="20 a 50 mil MXN">$20,000 a $50,000 MXN</option>
+                <option value="50 a 100 mil MXN">$50,000 a $100,000 MXN</option>
+                <option value="Más de 100 mil MXN">Más de $100,000 MXN</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="mensaje">Qué traes en mente</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+            <span class="hint">Un par de líneas basta. Qué quieres lograr y para cuándo.</span>
+          </div>
+        </div>
+        <div class="form-foot">
+          <button type="submit" class="btn-dark">Enviar por WhatsApp</button>
+          <p class="form-note">Al enviar se abre WhatsApp con el mensaje ya escrito, listo para que lo revises antes de mandarlo. El formulario no guarda ni transmite tus datos a ningún servidor.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="directo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">O directo</span>
+      <h2>Si prefieres saltarte<br>el formulario.</h2>
+    </div>
+    <div class="directo-grid reveal">
+      <div class="col">
+        <span>WhatsApp</span>
+        <a href="https://wa.me/529999064262?text=Hola%20Desruptivo%2C%20quiero%20platicar%20sobre%20un%20proyecto" target="_blank" rel="noopener">+52 999 906 4262</a>
+      </div>
+      <div class="col">
+        <span>Correo</span>
+        <a href="mailto:desruptivo@outlook.com?subject=Proyecto%20nuevo%20%E2%80%94%20Desruptivo">desruptivo@outlook.com</a>
+      </div>
+      <div class="col">
+        <span>Instagram</span>
+        <a href="https://instagram.com/desruptivomx" target="_blank" rel="noopener">@desruptivomx</a>
+      </div>
+      <div class="col">
+        <span>Dónde estamos</span>
+        <p>Mérida, Yucatán</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html" aria-label="Desruptivo — inicio"><img src="img/logo-desruptivo.png" alt="Desruptivo" class="footer-logo-img"></a>
+    <p>© 2026 Desruptivo — Agencia Creativa Integral</p>
+    <div class="fsocial">
+      <a href="nosotros.html">Nosotros</a>
+      <a href="esencia.html">Esencia</a>
+      <a href="index.html#trabajo">Trabajo</a>
+      <a href="trabajemos.html">Trabajemos</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/desruptivo.js"></script>
+<script>
+  // El formulario no manda nada a ningún servidor: arma un mensaje
+  // de WhatsApp y abre el chat para que el cliente lo revise y envíe.
+  (function () {
+    var form = document.getElementById('briefForm');
+    var box = document.getElementById('formError');
+    if (!form) return;
+
+    var TEL = '529999064262';
+
+    var fail = function (msg, id) {
+      box.textContent = msg;
+      box.classList.add('visible');
+      var f = document.getElementById(id);
+      if (f) f.focus();
+    };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      box.classList.remove('visible');
+
+      var v = function (id) { return (document.getElementById(id).value || '').trim(); };
+      var nombre = v('nombre');
+      var mensaje = v('mensaje');
+
+      if (!nombre) return fail('Falta tu nombre.', 'nombre');
+      if (mensaje.length < 10) return fail('Cuéntanos un poco más en el último campo.', 'mensaje');
+
+      var lineas = [
+        'Hola Desruptivo, soy ' + nombre + '.',
+        '',
+        'Negocio: ' + (v('negocio') || 'sin definir'),
+        'Necesito: ' + v('necesito'),
+        'Presupuesto: ' + v('presupuesto'),
+        '',
+        mensaje
+      ];
+
+      window.open('https://wa.me/' + TEL + '?text=' + encodeURIComponent(lineas.join('\n')), '_blank', 'noopener');
+    });
+  })();
+</script>
+</body>
+</html>

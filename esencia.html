@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#cf1417">
+<title>Esencia — DESRUPTIVO</title>
+<meta name="description" content="En qué creemos y cómo lo defendemos. Cinco cosas que no hacemos y cinco que sí, escritas para que nos las puedas cobrar.">
+<link rel="canonical" href="https://desruptivomx-sketch.github.io/desruptivo-web/esencia.html">
+
+<link rel="icon" type="image/png" href="img/mascota-desruptivo.png">
+<link rel="apple-touch-icon" href="img/mascota-desruptivo.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Desruptivo">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://desruptivomx-sketch.github.io/desruptivo-web/esencia.html">
+<meta property="og:title" content="Esencia — DESRUPTIVO">
+<meta property="og:description" content="No hacemos marcas seguras. Hacemos marcas que se notan. En qué creemos y cómo lo defendemos.">
+<meta property="og:image" content="https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg">
+
+<link rel="preload" href="fonts/SquidBoy-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Monoglyphic-VF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/desruptivo.css">
+<style>
+  /* ---------- INTRO ---------- */
+  .intro{background:var(--cream);padding-bottom:0;}
+  .intro-inner{max-width:64ch;}
+  .intro p{
+    font-family:var(--f-wide);font-weight:400;
+    font-size:clamp(1.05rem,1.7vw,1.3rem);line-height:1.6;
+  }
+  .intro p + p{margin-top:1.1em;}
+
+  /* ---------- BANDAS DE CREENCIA ---------- */
+  .creencias{padding:0;}
+  .banda{
+    position:relative;
+    padding:clamp(58px,8.5vh,98px) 0;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .banda::before{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:url('img/textura-grano.png') 0 0/210px 210px repeat;
+    mix-blend-mode:multiply;opacity:.2;
+  }
+  .banda .wrap{position:relative;z-index:2;}
+
+  .banda--roja{background:var(--red-ink);color:var(--paper);--ink:var(--paper);}
+  .banda--papel{background:var(--paper);color:var(--carbon);--ink:var(--carbon);}
+  .banda--carbon{background:var(--carbon);color:var(--cream);--ink:var(--cream);}
+  .banda--verde{
+    color:var(--carbon);
+    --ink:var(--carbon);
+    background:
+      repeating-linear-gradient(45deg, transparent 0 10px, rgba(39,39,42,.06) 10px 11px),
+      var(--green);
+  }
+  .banda--negra{background:#000;color:var(--cream);--ink:var(--cream);}
+
+  .banda-mark{
+    font-family:var(--f-mono);font-weight:700;
+    font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+    display:block;margin-bottom:26px;opacity:.7;
+  }
+
+  .par{max-width:none;}
+  .par .no,
+  .par .si{
+    display:block;
+    font-family:var(--f-display);
+    font-weight:700;text-transform:uppercase;
+    font-size:clamp(2.1rem,7.6vw,5.4rem);
+    line-height:.94;
+    max-width:22ch;
+  }
+  /* La negación va en contorno; la afirmación en sólido.
+     El color del trazo va en --ink porque currentColor se resolvería
+     al color transparente del propio elemento. */
+  .par .no{opacity:.5;}
+  @supports (-webkit-text-stroke:2px red){
+    .par .no{
+      -webkit-text-stroke:2px var(--ink);
+      color:transparent;
+      opacity:1;
+    }
+  }
+  .par .si{margin-top:.12em;}
+  .par .glosa{
+    display:block;
+    margin-top:30px;
+    max-width:54ch;
+    font-family:var(--f-mono);font-weight:450;
+    font-size:.95rem;line-height:1.6;
+    opacity:.9;
+  }
+  .banda--verde .par .glosa{opacity:1;}
+
+  /* ---------- CIERRE ---------- */
+  .allen{
+    background:var(--carbon);color:var(--cream);
+    text-align:center;overflow:hidden;
+  }
+  .allen h2{
+    font-size:clamp(2.4rem,11vw,7rem);
+    line-height:.92;
+  }
+  .allen h2 .ast{color:var(--red);}
+  .allen .mascota{width:min(130px,28vw);margin:0 auto 30px;}
+  .allen p{
+    max-width:44ch;margin:26px auto 40px;
+    line-height:1.6;color:var(--grey);
+  }
+
+  @media (max-width:480px){
+    @supports (-webkit-text-stroke:1px currentColor){
+      .par .no{-webkit-text-stroke-width:1.5px;}
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Desruptivo — inicio"><img src="img/logo-desruptivo.png" alt="Desruptivo"></a>
+    <nav class="links">
+      <a href="nosotros.html">Nosotros</a>
+      <a href="esencia.html" aria-current="page">Esencia</a>
+      <a href="index.html#servicios">Servicios</a>
+      <a href="index.html#diseno">Diseño</a>
+      <a href="index.html#trabajo">Trabajo</a>
+    </nav>
+    <a href="trabajemos.html" class="nav-cta">Trabajemos</a>
+    <button class="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+<section class="page-hero page-hero--red">
+  <div class="page-hero-print" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="crumbs"><a href="index.html">Inicio</a> / Esencia</p>
+    <span class="eyebrow">Esencia</span>
+    <h1>En qué creemos, y cómo nos lo puedes cobrar.</h1>
+    <p class="lede">Cualquiera puede escribir valores bonitos en una página. Estos están escritos como pares: lo que no hacemos y lo que hacemos en su lugar. Así se vuelven verificables.</p>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="wrap">
+    <div class="intro-inner">
+    <p>Una agencia se define por lo que decide no hacer. Es fácil decir que buscas la excelencia; es más útil decir que no vas a entregar una campaña que se parezca a la del competidor, aunque sea la ruta más rápida y menos peleada.</p>
+    <p>Lo que sigue son las cinco decisiones que sostienen todo lo que hacemos. Si en algún proyecto sientes que rompimos una, dínoslo. Para eso están públicas.</p>
+    </div>
+  </div>
+</section>
+
+<div class="creencias">
+
+  <section class="banda banda--roja reveal">
+    <div class="wrap">
+      <span class="banda-mark">Creencia uno</span>
+      <div class="par">
+        <span class="no">No hacemos marcas seguras.</span>
+        <span class="si">Hacemos marcas que se notan.</span>
+        <span class="glosa">Lo seguro es lo que ya existe: la misma paleta, el mismo tono, la misma promesa que la marca de al lado. Funciona para no equivocarse y sirve para nada más. Preferimos una decisión discutible a una invisible.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="banda banda--papel reveal">
+    <div class="wrap">
+      <span class="banda-mark">Creencia dos</span>
+      <div class="par">
+        <span class="no">No entregamos piezas sueltas.</span>
+        <span class="si">Entregamos una idea que aguanta en la calle.</span>
+        <span class="glosa">Un logotipo que solo se ve bien en la presentación no es un logotipo. La prueba real es el rótulo de la sucursal, el story de las nueve de la noche y el empaque impreso a dos tintas. Si la idea no sobrevive ahí, no está terminada.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="banda banda--carbon reveal">
+    <div class="wrap">
+      <span class="banda-mark">Creencia tres</span>
+      <div class="par">
+        <span class="no">No traducimos el brief tres veces.</span>
+        <span class="si">Un equipo, una dirección, una voz.</span>
+        <span class="glosa">Cuando la identidad la hace uno, el video otro y el sitio un tercero, el cliente termina de mensajero entre proveedores que nunca se hablaron. Aquí el que dirige la marca es el mismo que revisa el guion y define el sitio.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="banda banda--verde reveal">
+    <div class="wrap">
+      <span class="banda-mark">Creencia cuatro</span>
+      <div class="par">
+        <span class="no">No cobramos por hacer ruido.</span>
+        <span class="si">El ruido vuelve como resultado.</span>
+        <span class="glosa">Ser desruptivo no es gritar más fuerte. Cada peso de pauta y cada pieza tienen que conectar con algo medible: ventas, citas, altas, visitas. Si una idea es espectacular pero no mueve el número, no la defendemos.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="banda banda--negra reveal">
+    <div class="wrap">
+      <span class="banda-mark">Creencia cinco</span>
+      <div class="par">
+        <span class="no">No pedimos permiso.</span>
+        <span class="si">Que se note que fuimos nosotros.</span>
+        <span class="glosa">Tomamos posición y la sostenemos con argumentos, no con gusto personal. Si estás buscando un proveedor que ejecute sin opinar, no somos ese equipo, y es mejor saberlo en la primera junta.</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<section class="allen">
+  <div class="wrap">
+    <img src="img/mascota-desruptivo.png" alt="" class="mascota">
+    <h2>All Eyes<br>On Us<span class="ast">✳</span></h2>
+    <p>No es un eslogan: es la vara con la que medimos si un proyecto salió bien.</p>
+    <a href="trabajemos.html" class="btn-primary">Empecemos algo</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html" aria-label="Desruptivo — inicio"><img src="img/logo-desruptivo.png" alt="Desruptivo" class="footer-logo-img"></a>
+    <p>© 2026 Desruptivo — Agencia Creativa Integral</p>
+    <div class="fsocial">
+      <a href="nosotros.html">Nosotros</a>
+      <a href="esencia.html">Esencia</a>
+      <a href="index.html#trabajo">Trabajo</a>
+      <a href="trabajemos.html">Trabajemos</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/desruptivo.js"></script>
+</body>
+</html>
