@@ -1,0 +1,16 @@
+{
+  "name": "Desruptivo — Agencia Creativa Integral",
+  "short_name": "Desruptivo",
+  "description": "Agencia creativa integral en Mérida, Yucatán.",
+  "lang": "es-MX",
+  "start_url": "/desruptivo-web/",
+  "scope": "/desruptivo-web/",
+  "display": "standalone",
+  "theme_color": "#cf1417",
+  "background_color": "#e8e7df",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
