@@ -119,26 +119,36 @@
      Ahora arranca tapada por dos hojas rojas que continuan el hero, y son las
      manos las que la abren conforme se baja. Sin JS o con movimiento reducido
      las hojas ni se pintan y la seccion se comporta como siempre. */
+  /* ---------- LA PUERTA ----------
+     Ocurre UNA sola vez, al entrar la seccion en pantalla, y se queda
+     abierta. Antes iba amarrada al scroll: se comia 230vh, al subir se
+     volvia a cerrar y el contenido solo aparecia al final del recorrido,
+     justo cuando ya ibas de salida. Ahora la seccion mide lo que mide y
+     la animacion dura 1.6s por su cuenta, sin robarse el scroll. */
   .puerta{position:relative;background:var(--cream);}
   .puerta .hoja{display:none;}
 
-  .puerta.activa{height:230vh;padding:0;}
+  .puerta.activa{padding:0;}
   .puerta.activa .puerta-escena{
-    position:sticky;top:0;height:100vh;overflow:hidden;
+    position:relative;overflow:hidden;
+    min-height:min(94vh,700px);
     display:grid;place-items:center;
   }
-  .puerta.activa .puerta-contenido{
-    width:100%;
-    transform:scale(calc(.94 + var(--abre,0) * .06));
+  .puerta.activa .puerta-contenido{width:100%;transform:scale(.95);}
+  .puerta.activa.abre .puerta-contenido{
+    animation:puerta-contenido .9s cubic-bezier(.2,.7,.2,1) .8s forwards;
   }
+
   .puerta.activa .hoja{
     display:block;position:absolute;left:0;right:0;
     height:calc(50% + 1px);          /* 1px de traslape para que no se vea la union */
     background:var(--red-ink);
-    z-index:2;will-change:transform;
+    z-index:2;pointer-events:none;
   }
-  .puerta.activa .hoja--arriba{top:0;   transform:translate3d(0,calc(var(--abre,0) * -100%),0);}
-  .puerta.activa .hoja--abajo {bottom:0;transform:translate3d(0,calc(var(--abre,0) *  100%),0);}
+  .puerta.activa .hoja--arriba{top:0;}
+  .puerta.activa .hoja--abajo {bottom:0;}
+  .puerta.activa.abre .hoja--arriba{animation:puerta-sube .9s cubic-bezier(.5,0,.2,1) .8s forwards;}
+  .puerta.activa.abre .hoja--abajo {animation:puerta-baja .9s cubic-bezier(.5,0,.2,1) .8s forwards;}
 
   .hoja-print{
     position:absolute;inset:0;pointer-events:none;
@@ -146,15 +156,23 @@
     opacity:.38;mix-blend-mode:multiply;
   }
 
-  /* Una mano baja y la otra sube. Abren en vertical porque el texto es ancho:
-     si las hojas salieran de lado dejarian dos franjas rojas enormes a los
-     costados. Asi el hueco crece como banda y el texto lo llena entero.
-     Las manos viajan dentro de su hoja, o sea que heredan la apertura. */
-  .puno{position:absolute;left:50%;z-index:3;line-height:0;will-change:transform;}
-  .hoja--arriba .puno{bottom:0;transform:translate(-50%,calc((var(--entra,0) - 1) * 58vh));}
-  .hoja--abajo  .puno{top:0;   transform:translate(-50%,calc((1 - var(--entra,0)) * 58vh));}
+  /* Una mano baja y la otra sube. Abren en vertical porque el texto es
+     ancho: de lado dejaban dos franjas rojas enormes a los costados.
+     Viajan dentro de su hoja, o sea que la salida se la heredan. */
+  .puno{position:absolute;left:50%;z-index:3;line-height:0;}
+  .hoja--arriba .puno{bottom:0;transform:translate(-50%,-62vh);}
+  .hoja--abajo  .puno{top:0;   transform:translate(-50%, 62vh);}
+  .puerta.activa.abre .hoja--arriba .puno,
+  .puerta.activa.abre .hoja--abajo  .puno{
+    animation:puerta-mano .7s cubic-bezier(.25,.85,.3,1) forwards;
+  }
   .mano{width:clamp(130px,20vw,290px);height:auto;display:block;}
   .mano.espejo{transform:scaleY(-1);}
+
+  @keyframes puerta-mano{to{transform:translate(-50%,0);}}
+  @keyframes puerta-sube{to{transform:translateY(-100%);}}
+  @keyframes puerta-baja{to{transform:translateY(100%);}}
+  @keyframes puerta-contenido{to{transform:scale(1);}}
 
   /* Mientras la puerta sigue cerrada el header no debe volverse claro:
      abajo solo hay rojo. */
@@ -169,7 +187,7 @@
   }
 
   @media (max-width:700px){
-    .puerta.activa{height:200vh;}
+    .puerta.activa .puerta-escena{min-height:min(88vh,620px);}
     .mano{width:clamp(110px,34vw,200px);}
   }
 
@@ -507,52 +525,44 @@
 
   listas.then(function(){ setTimeout(arrancar, 900); });
 })();
-/* La puerta. Convierte el avance del scroll sobre la seccion en dos numeros:
-   --entra (las manos llegan al centro) y --abre (las hojas se separan).
-   El CSS hace el resto; aqui solo se escriben las dos variables. */
+/* La puerta. Se abre UNA vez, cuando la seccion ya ocupa buena parte de la
+   pantalla, y se queda abierta para siempre. No escucha el scroll a
+   proposito: amarrarla al scroll hacia que el contenido solo apareciera al
+   final del recorrido y que al subir se volviera a cerrar. */
 (function(){
   var puerta = document.getElementById('puerta');
   if(!puerta) return;
-  var escena = puerta.querySelector('.puerta-escena');
-  if(!escena) return;
 
   /* Con movimiento reducido no se activa: la intro se ve normal, sin hojas. */
-  var menos = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if(menos.matches) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(!('IntersectionObserver' in window)) return;
 
   puerta.classList.add('activa');
 
-  var FIN_ENTRADA = .30,   /* hasta aqui las manos llegan al centro */
-      INICIO_ABRE = .38,   /* pausa corta: las manos agarran */
-      FIN_ABRE    = .88;   /* abierta del todo, con un respiro antes de soltar */
+  var abierta = false;
 
-  function suave(t){ return t*t*(3-2*t); }              /* arranque y frenado */
-  function tramo(p,a,b){ return Math.min(1,Math.max(0,(p-a)/(b-a))); }
+  /* Mientras siga cerrada y a la vista, el header no debe ponerse claro:
+     arriba esta el hero rojo, en medio la puerta roja y abajo la primera
+     banda, que tambien es roja. Todo lo visible es rojo. */
+  var vigiaRojo = new IntersectionObserver(function(e){
+    if(!abierta) document.body.classList.toggle('rojo-total', e[0].isIntersecting);
+  }, {threshold:0});
+  vigiaRojo.observe(puerta);
 
-  var pendiente = false;
-
-  function pintar(){
-    pendiente = false;
-    var recorrido = puerta.offsetHeight - window.innerHeight;
-    var p = recorrido > 0
-      ? Math.min(1, Math.max(0, -puerta.getBoundingClientRect().top / recorrido))
-      : 1;
-
-    var entra = suave(tramo(p, 0, FIN_ENTRADA));
-    var abre  = tramo(p, INICIO_ABRE, FIN_ABRE);
-
-    escena.style.setProperty('--entra', entra.toFixed(4));
-    escena.style.setProperty('--abre',  abre.toFixed(4));
-    document.body.classList.toggle('rojo-total', abre < .45);
-  }
-
-  function alScroll(){
-    if(!pendiente){ pendiente = true; requestAnimationFrame(pintar); }
-  }
-
-  addEventListener('scroll', alScroll, {passive:true});
-  addEventListener('resize', alScroll);
-  pintar();
+  /* El disparo va por linea de centro, no por proporcion visible: con un
+     umbral de porcentaje, en pantallas altas la animacion arrancaria con la
+     seccion todavia abajo y se la perderia. Asi salta justo cuando la puerta
+     cruza la mitad de la pantalla, y termina de abrir mientras se centra. */
+  var vigiaAbre = new IntersectionObserver(function(e){
+    if(abierta || !e[0].isIntersecting) return;
+    abierta = true;
+    puerta.classList.add('abre');
+    vigiaAbre.disconnect();
+    vigiaRojo.disconnect();
+    /* .8s de espera + .9s de apertura: a media apertura ya hay claro arriba. */
+    setTimeout(function(){ document.body.classList.remove('rojo-total'); }, 1250);
+  }, {rootMargin:'-50% 0px -50% 0px', threshold:0});
+  vigiaAbre.observe(puerta);
 })();
 </script>
 </body>
