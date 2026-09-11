@@ -44,7 +44,7 @@
     letter-spacing:-.015em;
     font-size:clamp(2.1rem,6.6vw,5.4rem);
     line-height:1.06;
-    max-width:13.7em;
+    max-width:12.2em;
   }
   .lema .en,
   .lema .es{display:block;}
@@ -66,19 +66,24 @@
     vertical-align:baseline;
     transition:opacity .17s linear, transform .17s ease;
   }
-  .lema .w[data-p="no"]    {width:1.38em;}
-  .lema .w[data-p="hay"]   {width:2.03em;}
-  .lema .w[data-p="una"]   {width:2.03em;}
-  .lema .w[data-p="sola"]  {width:2.52em;}
-  .lema .w[data-p="manera"]{width:4.15em;}
+  .lema .w[data-p="no"]    {width:1.25em;}
+  .lema .w[data-p="hay"]   {width:1.86em;}
+  .lema .w[data-p="una"]   {width:1.86em;}
+  .lema .w[data-p="sola"]  {width:2.20em;}
+  .lema .w[data-p="manera"]{width:3.81em;}
   .lema .w.mutando{opacity:0;transform:translateY(-.05em);}
+  /* Seis maneras de escribir lo mismo. Los multiplicadores estan calculados
+     sobre la tinta real de la 'o' y la 'n' de cada fuente, no sobre su OS/2
+     (el de Dripdrop declara altura-x .70 cuando en realidad dibuja .444)
+     y el tracking compensa el ancho, porque Dripdrop y Relaxe son mucho mas
+     condensadas que Monoglyphic y dejarian media caja vacia. */
   .lema .w.m1{                       /* Squid Boy, caja alta solida */
     font-family:'Squid Boy',sans-serif;font-weight:700;
-    text-transform:uppercase;font-size:.80em;letter-spacing:0;
+    text-transform:uppercase;font-size:.74em;letter-spacing:.005em;
   }
   .lema .w.m2{                       /* New Black, caja alta en contorno */
     font-family:'New Black',sans-serif;font-weight:800;
-    text-transform:uppercase;font-size:.95em;letter-spacing:.005em;
+    text-transform:uppercase;font-size:.88em;letter-spacing:-.057em;
     opacity:.55;
   }
   @supports (-webkit-text-stroke:2px red){
@@ -89,14 +94,19 @@
   }
   .lema .w.m3{                       /* Monoglyphic, la voz tecnica */
     font-family:'Monoglyphic',monospace;font-weight:650;
-    font-size:1.14em;letter-spacing:-.03em;
+    font-size:1.13em;letter-spacing:-.075em;
   }
   .lema .w.m4{                       /* Casual Human, la voz a mano */
     font-family:'Casual Human',cursive;font-weight:700;
-    font-size:1.08em;
+    font-size:1.09em;letter-spacing:.004em;
   }
-  .lema .w.m5{                       /* IT Trivane, la base */
-    font-family:var(--f-lema);font-weight:400;font-size:1em;
+  .lema .w.m5{                       /* Dripdrop, el plumon */
+    font-family:'Dripdrop',cursive;font-weight:400;
+    font-size:1.33em;letter-spacing:.007em;
+  }
+  .lema .w.m6{                       /* Relaxe, la condensada de cartel */
+    font-family:'Relaxe',sans-serif;font-weight:400;
+    font-size:.80em;letter-spacing:.175em;
   }
 
   @media (max-width:480px){
@@ -231,7 +241,7 @@
     <span class="eyebrow">Esencia</span>
     <h1 class="lema">
       <span class="en">There is no one way<span class="guion" aria-hidden="true">—</span></span>
-      <span class="es"><span class="w m5" data-p="no">no</span> <span class="w m5" data-p="hay">hay</span> <span class="w m5" data-p="una">una</span> <span class="w m5" data-p="sola">sola</span> <span class="w m5" data-p="manera">manera</span></span>
+      <span class="es"><span class="w m1" data-p="no">no</span> <span class="w m1" data-p="hay">hay</span> <span class="w m1" data-p="una">una</span> <span class="w m1" data-p="sola">sola</span> <span class="w m1" data-p="manera">manera</span></span>
     </h1>
     <p class="lede">En qué creemos y cómo nos lo puedes cobrar. Cualquiera puede escribir valores bonitos en una página. Estos están escritos como pares: lo que no hacemos y lo que hacemos en su lugar. Así se vuelven verificables.</p>
   </div>
@@ -339,7 +349,7 @@
   if(!es) return;
 
   var palabras = Array.prototype.slice.call(es.querySelectorAll('.w'));
-  var maneras  = ['m1','m2','m3','m4','m5'];
+  var maneras  = ['m1','m2','m3','m4','m5','m6'];
   if(palabras.length < 2) return;
 
   var menosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -353,7 +363,8 @@
         document.fonts.load("800 1em 'New Black'"),
         document.fonts.load("650 1em 'Monoglyphic'"),
         document.fonts.load("700 1em 'Casual Human'"),
-        document.fonts.load("400 1em 'IT Trivane'")
+        document.fonts.load("400 1em 'Dripdrop'"),
+        document.fonts.load("400 1em 'Relaxe'")
       ]).catch(function(){})
     : Promise.resolve();
 
@@ -376,7 +387,7 @@
   function rotar(){
     elegirDos().forEach(function(i){
       var palabra = palabras[i];
-      var actual  = maneras.indexOf(palabra.dataset.manera || 'm5');
+      var actual  = maneras.indexOf(palabra.dataset.manera || 'm1');
       var nueva;
       do { nueva = Math.floor(Math.random() * maneras.length); } while(nueva === actual);
 
@@ -395,7 +406,7 @@
   function arrancar(){ if(!reloj && visible) reloj = setInterval(rotar, 780); }
   function parar(){ if(reloj){ clearInterval(reloj); reloj = null; } }
 
-  palabras.forEach(function(p){ p.dataset.manera = 'm5'; });
+  palabras.forEach(function(p){ p.dataset.manera = 'm1'; });
 
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(entradas){
