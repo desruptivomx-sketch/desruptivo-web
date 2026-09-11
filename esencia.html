@@ -44,12 +44,12 @@
     letter-spacing:-.015em;
     font-size:clamp(2.1rem,6.6vw,5.4rem);
     line-height:1.06;
-    max-width:12.2em;
+    max-width:12.5em;
   }
   .lema .en,
   .lema .es{display:block;}
   .lema .en{text-transform:uppercase;letter-spacing:0;}
-  .lema .es{margin-top:.04em;}
+  .lema .es{margin-top:.04em;word-spacing:.1em;}
   .lema .guion{
     display:inline-block;
     color:var(--carbon);
@@ -64,6 +64,11 @@
     display:inline-block;
     text-align:center;
     vertical-align:baseline;
+  }
+  /* .g es la unica que cambia de font-size. La caja de arriba se queda en el
+     tamanio del h1, que es lo que hace que su width en em sea siempre el mismo. */
+  .lema .g{
+    display:inline-block;
     transition:opacity .17s linear, transform .17s ease;
   }
   .lema .w[data-p="no"]    {width:1.25em;}
@@ -71,42 +76,42 @@
   .lema .w[data-p="una"]   {width:1.86em;}
   .lema .w[data-p="sola"]  {width:2.20em;}
   .lema .w[data-p="manera"]{width:3.81em;}
-  .lema .w.mutando{opacity:0;transform:translateY(-.05em);}
+  .lema .g.mutando{opacity:0;transform:translateY(-.05em);}
   /* Cuatro maneras de escribir lo mismo. Los multiplicadores estan calculados
      sobre la tinta real de la 'o' y la 'n' de cada fuente, no sobre lo que
      declara su tabla OS/2, que en varias no coincide. El tracking compensa
      el ancho para que ninguna deje media caja vacia. */
-  .lema .w.m1{                       /* Squid Boy, caja alta solida */
+  .lema .g.m1{                       /* Squid Boy, caja alta solida */
     font-family:'Squid Boy',sans-serif;font-weight:700;
     text-transform:uppercase;font-size:.74em;letter-spacing:.005em;
   }
-  .lema .w.m2{                       /* New Black, caja alta en contorno */
+  .lema .g.m2{                       /* New Black, caja alta en contorno */
     font-family:'New Black',sans-serif;font-weight:800;
     text-transform:uppercase;font-size:.88em;letter-spacing:-.057em;
     opacity:.55;
   }
   @supports (-webkit-text-stroke:2px red){
-    .lema .w.m2{
+    .lema .g.m2{
       -webkit-text-stroke:2px var(--paper);
       color:transparent;opacity:1;
     }
   }
-  .lema .w.m3{                       /* Monoglyphic, la voz tecnica */
+  .lema .g.m3{                       /* Monoglyphic, la voz tecnica */
     font-family:'Monoglyphic',monospace;font-weight:650;
     font-size:1.13em;letter-spacing:-.075em;
   }
-  .lema .w.m4{                       /* Casual Human, la voz a mano */
+  .lema .g.m4{                       /* Casual Human, la voz a mano */
     font-family:'Casual Human',cursive;font-weight:700;
     font-size:1.09em;letter-spacing:.004em;
   }
 
   @media (max-width:480px){
     @supports (-webkit-text-stroke:1px currentColor){
-      .lema .w.m2{-webkit-text-stroke-width:1.5px;}
+      .lema .g.m2{-webkit-text-stroke-width:1.5px;}
     }
   }
   @media (prefers-reduced-motion:reduce){
-    .lema .w{transition:none;}
+    .lema .g{transition:none;}
   }
 
   /* ---------- INTRO ---------- */
@@ -232,7 +237,7 @@
     <span class="eyebrow">Esencia</span>
     <h1 class="lema">
       <span class="en">There is no one way<span class="guion" aria-hidden="true">—</span></span>
-      <span class="es"><span class="w m1" data-p="no">no</span> <span class="w m1" data-p="hay">hay</span> <span class="w m1" data-p="una">una</span> <span class="w m1" data-p="sola">sola</span> <span class="w m1" data-p="manera">manera</span></span>
+      <span class="es"><span class="w" data-p="no"><span class="g m1">no</span></span> <span class="w" data-p="hay"><span class="g m1">hay</span></span> <span class="w" data-p="una"><span class="g m1">una</span></span> <span class="w" data-p="sola"><span class="g m1">sola</span></span> <span class="w" data-p="manera"><span class="g m1">manera</span></span></span>
     </h1>
     <p class="lede">En qué creemos y cómo nos lo puedes cobrar. Cualquiera puede escribir valores bonitos en una página. Estos están escritos como pares: lo que no hacemos y lo que hacemos en su lugar. Así se vuelven verificables.</p>
   </div>
@@ -339,7 +344,7 @@
   var es = document.querySelector('.lema .es');
   if(!es) return;
 
-  var palabras = Array.prototype.slice.call(es.querySelectorAll('.w'));
+  var palabras = Array.prototype.slice.call(es.querySelectorAll('.g'));
   var maneras  = ['m1','m2','m3','m4'];
   if(palabras.length < 2) return;
 
