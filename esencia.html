@@ -72,11 +72,10 @@
   .lema .w[data-p="sola"]  {width:2.20em;}
   .lema .w[data-p="manera"]{width:3.81em;}
   .lema .w.mutando{opacity:0;transform:translateY(-.05em);}
-  /* Seis maneras de escribir lo mismo. Los multiplicadores estan calculados
-     sobre la tinta real de la 'o' y la 'n' de cada fuente, no sobre su OS/2
-     (el de Dripdrop declara altura-x .70 cuando en realidad dibuja .444)
-     y el tracking compensa el ancho, porque Dripdrop y Relaxe son mucho mas
-     condensadas que Monoglyphic y dejarian media caja vacia. */
+  /* Cuatro maneras de escribir lo mismo. Los multiplicadores estan calculados
+     sobre la tinta real de la 'o' y la 'n' de cada fuente, no sobre lo que
+     declara su tabla OS/2, que en varias no coincide. El tracking compensa
+     el ancho para que ninguna deje media caja vacia. */
   .lema .w.m1{                       /* Squid Boy, caja alta solida */
     font-family:'Squid Boy',sans-serif;font-weight:700;
     text-transform:uppercase;font-size:.74em;letter-spacing:.005em;
@@ -99,14 +98,6 @@
   .lema .w.m4{                       /* Casual Human, la voz a mano */
     font-family:'Casual Human',cursive;font-weight:700;
     font-size:1.09em;letter-spacing:.004em;
-  }
-  .lema .w.m5{                       /* Dripdrop, el plumon */
-    font-family:'Dripdrop',cursive;font-weight:400;
-    font-size:1.33em;letter-spacing:.007em;
-  }
-  .lema .w.m6{                       /* Relaxe, la condensada de cartel */
-    font-family:'Relaxe',sans-serif;font-weight:400;
-    font-size:.80em;letter-spacing:.175em;
   }
 
   @media (max-width:480px){
@@ -349,7 +340,7 @@
   if(!es) return;
 
   var palabras = Array.prototype.slice.call(es.querySelectorAll('.w'));
-  var maneras  = ['m1','m2','m3','m4','m5','m6'];
+  var maneras  = ['m1','m2','m3','m4'];
   if(palabras.length < 2) return;
 
   var menosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -362,9 +353,7 @@
         document.fonts.load("700 1em 'Squid Boy'"),
         document.fonts.load("800 1em 'New Black'"),
         document.fonts.load("650 1em 'Monoglyphic'"),
-        document.fonts.load("700 1em 'Casual Human'"),
-        document.fonts.load("400 1em 'Dripdrop'"),
-        document.fonts.load("400 1em 'Relaxe'")
+        document.fonts.load("700 1em 'Casual Human'")
       ]).catch(function(){})
     : Promise.resolve();
 
