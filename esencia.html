@@ -26,10 +26,76 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://desruptivomx-sketch.github.io/desruptivo-web/img/og-desruptivo.jpg">
 
+<link rel="preload" href="fonts/ITTrivane-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/SquidBoy-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Monoglyphic-VF.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/desruptivo.css">
 <style>
+  /* ---------- LEMA DEL HERO ----------
+     La frase es el argumento: "no hay una sola manera" no se escribe
+     de una sola manera. Cada palabra toma una de las cinco tipografias
+     de la casa y va rotando, asi que ninguna version queda como la
+     definitiva. Los tamanios estan compensados por altura-x para que
+     las cinco se lean del mismo tamanio aunque no lo sean. */
+  .page-hero h1.lema{
+    font-family:var(--f-lema);
+    font-weight:400;
+    text-transform:none;
+    letter-spacing:-.015em;
+    font-size:clamp(2.4rem,7.4vw,6rem);
+    line-height:1.06;
+    max-width:16ch;
+  }
+  .lema .en,
+  .lema .es{display:block;}
+  .lema .es{margin-top:.04em;}
+  .lema .guion{
+    display:inline-block;
+    color:var(--carbon);
+    opacity:.5;
+    margin-left:.14em;
+  }
+
+  .lema .w{
+    display:inline-block;
+    transition:font-size .55s cubic-bezier(.22,.68,.24,1);
+  }
+  .lema .w.m1{                       /* Squid Boy, caja alta solida */
+    font-family:'Squid Boy',sans-serif;font-weight:700;
+    text-transform:uppercase;font-size:.80em;letter-spacing:0;
+  }
+  .lema .w.m2{                       /* New Black, caja alta en contorno */
+    font-family:'New Black',sans-serif;font-weight:800;
+    text-transform:uppercase;font-size:.95em;letter-spacing:.005em;
+    opacity:.55;
+  }
+  @supports (-webkit-text-stroke:2px red){
+    .lema .w.m2{
+      -webkit-text-stroke:2px var(--paper);
+      color:transparent;opacity:1;
+    }
+  }
+  .lema .w.m3{                       /* Monoglyphic, la voz tecnica */
+    font-family:'Monoglyphic',monospace;font-weight:650;
+    font-size:1.14em;letter-spacing:-.03em;
+  }
+  .lema .w.m4{                       /* Casual Human, la voz a mano */
+    font-family:'Casual Human',cursive;font-weight:700;
+    font-size:1.08em;
+  }
+  .lema .w.m5{                       /* IT Trivane, la base */
+    font-family:var(--f-lema);font-weight:400;font-size:1em;
+  }
+
+  @media (max-width:480px){
+    @supports (-webkit-text-stroke:1px currentColor){
+      .lema .w.m2{-webkit-text-stroke-width:1.5px;}
+    }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .lema .w{transition:none;}
+  }
+
   /* ---------- INTRO ---------- */
   .intro{background:var(--cream);padding-bottom:0;}
   .intro-inner{max-width:64ch;}
@@ -151,8 +217,11 @@
   <div class="wrap">
     <p class="crumbs"><a href="index.html">Inicio</a> / Esencia</p>
     <span class="eyebrow">Esencia</span>
-    <h1>En qué creemos, y cómo nos lo puedes cobrar.</h1>
-    <p class="lede">Cualquiera puede escribir valores bonitos en una página. Estos están escritos como pares: lo que no hacemos y lo que hacemos en su lugar. Así se vuelven verificables.</p>
+    <h1 class="lema">
+      <span class="en">There is no one way<span class="guion" aria-hidden="true">—</span></span>
+      <span class="es"><span class="w m5">no</span> <span class="w m5">hay</span> <span class="w m5">una</span> <span class="w m5">sola</span> <span class="w m5">manera</span></span>
+    </h1>
+    <p class="lede">En qué creemos y cómo nos lo puedes cobrar. Cualquiera puede escribir valores bonitos en una página. Estos están escritos como pares: lo que no hacemos y lo que hacemos en su lugar. Así se vuelven verificables.</p>
   </div>
 </section>
 
@@ -249,5 +318,70 @@
 </footer>
 
 <script src="js/desruptivo.js"></script>
+<script>
+/* Lema del hero: cada palabra cambia de tipografia cada cierto rato,
+   una a la vez, para que la frase nunca quede escrita de una sola manera.
+   Se detiene si el usuario pidio menos movimiento o si el hero no esta a la vista. */
+(function(){
+  var es = document.querySelector('.lema .es');
+  if(!es) return;
+
+  var palabras = Array.prototype.slice.call(es.querySelectorAll('.w'));
+  var maneras  = ['m1','m2','m3','m4','m5'];
+  if(palabras.length < 2) return;
+
+  var menosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(menosMovimiento.matches) return;
+
+  /* Las cinco tipografias se cargan antes de empezar para que
+     ninguna palabra aparezca con la fuente de respaldo a media rotacion. */
+  var listas = document.fonts && document.fonts.load
+    ? Promise.all([
+        document.fonts.load("700 1em 'Squid Boy'"),
+        document.fonts.load("800 1em 'New Black'"),
+        document.fonts.load("650 1em 'Monoglyphic'"),
+        document.fonts.load("700 1em 'Casual Human'"),
+        document.fonts.load("400 1em 'IT Trivane'")
+      ]).catch(function(){})
+    : Promise.resolve();
+
+  var reloj = null, visible = true, ultima = -1;
+
+  function rotar(){
+    var i;
+    do { i = Math.floor(Math.random() * palabras.length); } while(i === ultima);
+    ultima = i;
+
+    var palabra = palabras[i];
+    var actual  = maneras.indexOf(palabra.dataset.manera || 'm5');
+    var nueva;
+    do { nueva = Math.floor(Math.random() * maneras.length); } while(nueva === actual);
+
+    palabra.classList.remove(maneras[actual]);
+    palabra.classList.add(maneras[nueva]);
+    palabra.dataset.manera = maneras[nueva];
+  }
+
+  function arrancar(){ if(!reloj && visible) reloj = setInterval(rotar, 1500); }
+  function parar(){ if(reloj){ clearInterval(reloj); reloj = null; } }
+
+  palabras.forEach(function(p){ p.dataset.manera = 'm5'; });
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entradas){
+      visible = entradas[0].isIntersecting;
+      visible ? arrancar() : parar();
+    }, {threshold:0}).observe(es);
+  }
+  document.addEventListener('visibilitychange', function(){
+    document.hidden ? parar() : arrancar();
+  });
+  if(menosMovimiento.addEventListener){
+    menosMovimiento.addEventListener('change', function(e){ e.matches && parar(); });
+  }
+
+  listas.then(function(){ setTimeout(arrancar, 900); });
+})();
+</script>
 </body>
 </html>
