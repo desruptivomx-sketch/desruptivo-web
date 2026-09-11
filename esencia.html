@@ -132,13 +132,13 @@
     transform:scale(calc(.94 + var(--abre,0) * .06));
   }
   .puerta.activa .hoja{
-    display:block;position:absolute;top:0;bottom:0;
-    width:50.6%;                       /* se traslapan tantito para que no se vea la union */
+    display:block;position:absolute;left:0;right:0;
+    height:calc(50% + 1px);          /* 1px de traslape para que no se vea la union */
     background:var(--red-ink);
     z-index:2;will-change:transform;
   }
-  .puerta.activa .hoja--izq{left:0; transform:translate3d(calc(var(--abre,0) * -101%),0,0);}
-  .puerta.activa .hoja--der{right:0;transform:translate3d(calc(var(--abre,0) *  101%),0,0);}
+  .puerta.activa .hoja--arriba{top:0;   transform:translate3d(0,calc(var(--abre,0) * -100%),0);}
+  .puerta.activa .hoja--abajo {bottom:0;transform:translate3d(0,calc(var(--abre,0) *  100%),0);}
 
   .hoja-print{
     position:absolute;inset:0;pointer-events:none;
@@ -146,14 +146,15 @@
     opacity:.38;mix-blend-mode:multiply;
   }
 
-  /* Las manos entran desde las orillas hasta juntarse al centro, y de ahi
-     jalan cada hoja hacia su lado. Viajan dentro de la hoja, o sea que el
-     movimiento de apertura se lo hereda la mano sin calcularlo aparte. */
-  .puno{position:absolute;top:50%;z-index:3;line-height:0;will-change:transform;}
-  .hoja--izq .puno{right:-1%;transform:translate(calc((var(--entra,0) - 1) * 58vw),-50%);}
-  .hoja--der .puno{left:-1%; transform:translate(calc((1 - var(--entra,0)) * 58vw),-50%);}
-  .mano{height:clamp(150px,max(28vh,13vw),340px);width:auto;display:block;}
-  .mano.espejo{transform:scaleX(-1);}
+  /* Una mano baja y la otra sube. Abren en vertical porque el texto es ancho:
+     si las hojas salieran de lado dejarian dos franjas rojas enormes a los
+     costados. Asi el hueco crece como banda y el texto lo llena entero.
+     Las manos viajan dentro de su hoja, o sea que heredan la apertura. */
+  .puno{position:absolute;left:50%;z-index:3;line-height:0;will-change:transform;}
+  .hoja--arriba .puno{bottom:0;transform:translate(-50%,calc((var(--entra,0) - 1) * 58vh));}
+  .hoja--abajo  .puno{top:0;   transform:translate(-50%,calc((1 - var(--entra,0)) * 58vh));}
+  .mano{width:clamp(130px,20vw,290px);height:auto;display:block;}
+  .mano.espejo{transform:scaleY(-1);}
 
   /* Mientras la puerta sigue cerrada el header no debe volverse claro:
      abajo solo hay rojo. */
@@ -169,7 +170,7 @@
 
   @media (max-width:700px){
     .puerta.activa{height:200vh;}
-    .mano{height:clamp(110px,max(22vh,26vw),210px);}
+    .mano{width:clamp(110px,34vw,200px);}
   }
 
   /* ---------- INTRO ---------- */
@@ -330,13 +331,13 @@
     </div>
       </div>
     </div>
-    <div class="hoja hoja--izq" aria-hidden="true">
+    <div class="hoja hoja--arriba" aria-hidden="true">
       <span class="hoja-print"></span>
-      <span class="puno"><svg class="mano" viewBox="-2200 0 2444 300" aria-hidden="true"><use href="#mano-desruptivo"/></svg></span>
+      <span class="puno"><svg class="mano" viewBox="-300 -2200 300 2444" aria-hidden="true"><g transform="rotate(90)"><use href="#mano-desruptivo"/></g></svg></span>
     </div>
-    <div class="hoja hoja--der" aria-hidden="true">
+    <div class="hoja hoja--abajo" aria-hidden="true">
       <span class="hoja-print"></span>
-      <span class="puno"><svg class="mano espejo" viewBox="-2200 0 2444 300" aria-hidden="true"><use href="#mano-desruptivo"/></svg></span>
+      <span class="puno"><svg class="mano espejo" viewBox="-300 -2200 300 2444" aria-hidden="true"><g transform="rotate(90)"><use href="#mano-desruptivo"/></g></svg></span>
     </div>
   </div>
 </section>
